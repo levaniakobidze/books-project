@@ -6,17 +6,19 @@ function Register() {
   return (
     <Fragment>
       <Navigation />
-      <section className="px-10 py-10 w-full min:h-[100vh] flex flex-col    bg-gradient-to-r to-tl from-[#c7d8e8] to-[#fde6e7]">
+      <section className="px-3 py-10 w-ful h-screen flex flex-col    bg-gradient-to-r to-tl from-[#c7d8e8] to-[#fde6e7]">
         <div className=" text-center my-5 ">
-          <h1 className="text-gray-700 text-4xl font-bold ">რეგისტრაცია</h1>
+          <h1 className="text-gray-500 text-4xl font-bold tracking-wider ">
+            რეგისტრაცია
+          </h1>
           {/* <p className="text-black mt-3 ">შედი შენს ანგარიშზე</p> */}
         </div>
-        <div className=" px-5 py-10 w-full sm:mx-auto sm:w-full sm:max-w-lg border rounded-3xl bg-white ">
-          <h1 className="text-gray-700 text-center mt-5 font-bold text-xl">
+        <div className="mt-2 px-5 py-5 w-full sm:mx-auto sm:w-full sm:max-w-lg border rounded-3xl bg-white ">
+          {/* <h1 className="text-gray-700 text-center mt-5 font-bold text-xl">
             შეავსე ველები და შედი შენს ანგარიშზე
-          </h1>
+          </h1> */}
           <div className="mt-10 ">
-            <label htmlFor="text" className="text-gray-800">
+            <label htmlFor="text" className="px-1 text-sm text-gray-800">
               Username
             </label>
             <input
@@ -27,8 +29,8 @@ function Register() {
               className="mt-3 w-full py-2.5 px-3 bg-[#f0f5f9] border-0 outline-none rounded-lg focus:outline focus:outline-cyan-300  text-sm"
             />
           </div>
-          <div className="mt-10 ">
-            <label htmlFor="text" className="text-gray-800">
+          <div className="mt-5 ">
+            <label htmlFor="text" className="px-1 text-sm text-gray-800">
               ელ.ფოსტა
             </label>
             <input
@@ -40,7 +42,7 @@ function Register() {
             />
           </div>
           <div className="mt-5">
-            <label htmlFor="password" className="text-gray-800">
+            <label htmlFor="password" className="px-1 text-sm text-gray-800">
               პაროლი
             </label>
             <input

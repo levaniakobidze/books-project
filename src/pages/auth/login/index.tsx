@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation/Navigation";
 import React, { Fragment } from "react";
+import Link from "next/link";
 
 function Login() {
   return (
@@ -49,6 +50,11 @@ function Login() {
               შესვლა
             </button>
           </div>
+          <Link
+            href={"/auth/register"}
+            className="flex justify-end text-[13px] mt-3 text-gray-600 hover:text-gray-500 cursor-pointer">
+            რეგისტრაცია
+          </Link>
         </div>
       </section>
     </Fragment>

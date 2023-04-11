@@ -1,4 +1,4 @@
-import React, { ReactHTMLElement, useState } from "react";
+import React, { ReactHTMLElement, useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -20,6 +20,16 @@ function Navigation() {
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
   };
+
+  useEffect(() => {
+    const html = document.getElementsByTagName("html")[0];
+
+    if (showMenu) {
+      html.style.overflow = "hidden";
+    } else {
+      html.style.overflow = "";
+    }
+  }, [showMenu]);
 
   return (
     <div>

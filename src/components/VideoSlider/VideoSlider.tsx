@@ -54,7 +54,7 @@ function VideoSlider() {
             return (
               <SplideSlide key={index}>
                 <iframe
-                  className="w-[100%]"
+                  className="w-[100%] shadow-lg border-4 bg-[#6ca0d1] border-[#6ca0d1] "
                   width="380"
                   height="245"
                   src={video.url}

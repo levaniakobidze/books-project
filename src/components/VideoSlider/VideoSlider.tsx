@@ -8,14 +8,15 @@ import Image from "next/image";
 
 function VideoSlider() {
   const [data, setData] = useState([
-    { url: "https://www.youtube.com/embed/rN-1A_uALmg" },
-    { url: "https://www.youtube.com/embed/rN-1A_uALmg" },
-    { url: "https://www.youtube.com/embed/rN-1A_uALmg" },
-    { url: "https://www.youtube.com/embed/rN-1A_uALmg" },
-    { url: "https://www.youtube.com/embed/rN-1A_uALmg" },
-    { url: "https://www.youtube.com/embed/rN-1A_uALmg" },
-    { url: "https://www.youtube.com/embed/rN-1A_uALmg" },
-    { url: "https://www.youtube.com/embed/rN-1A_uALmg" },
+    { url: "https://www.youtube.com/embed/FGHHGZ0_-jE" },
+    { url: "https://www.youtube.com/embed/RysLnh_YwTw" },
+    { url: "https://www.youtube.com/embed/ZniobJ1H47M" },
+    { url: "https://www.youtube.com/embed/FGHHGZ0_-jE" },
+    { url: "https://www.youtube.com/embed/RysLnh_YwTw" },
+    { url: "https://www.youtube.com/embed/ZniobJ1H47M" },
+    { url: "https://www.youtube.com/embed/FGHHGZ0_-jE" },
+    { url: "https://www.youtube.com/embed/RysLnh_YwTw" },
+    { url: "https://www.youtube.com/embed/ZniobJ1H47M" },
   ]);
 
   return (

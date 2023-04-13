@@ -36,11 +36,11 @@ function Navigation() {
 
   return (
     <div>
-      <nav className="py-5 px-10 flex items-center justify-between z-0">
+      <nav className=" py-5 px-10 flex items-center justify-between z-[100]">
         <div className="font-bold text-3xl text-gray-400 cursor-pointer">
           Logo
         </div>
-        <div>
+        <div className="  lg:hidden">
           <MenuIcon
             onClick={() => setShowMenu(!showMenu)}
             style={{ fontSize: "44px" }}
@@ -49,6 +49,25 @@ function Navigation() {
             } hover:text-red-500 cursor-pointer `}
           />
         </div>
+
+        <ul className="flex gap-[20px] sm:hidden lg:flex">
+          {navigation.map((nav, index) => {
+            return (
+              <li className="text-right" key={index}>
+                <Link
+                  onClick={() => setShowMenu(false)}
+                  className={` ${
+                    pathname === nav.href
+                      ? "text-[#6ca0d1] font-bold"
+                      : "text-gray-500"
+                  } hover:text-[#6ca0d1] transition-all text-sm tracking-wider`}
+                  href={nav.href}>
+                  {nav.name}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </nav>
       <div
         onClick={() => setShowMenu(false)}
@@ -77,8 +96,8 @@ function Navigation() {
                 <Link
                   onClick={() => setShowMenu(false)}
                   className={` ${
-                    pathname === nav.href ? "text-red-500" : "text-white"
-                  } hover:text-red-500 transition-all text-lg tracking-wider`}
+                    pathname === nav.href ? "text-[#6ca0d1]" : "text-white"
+                  } hover:text-[#6ca0d1] transition-all text-lg tracking-wider`}
                   href={nav.href}>
                   {nav.name}
                 </Link>

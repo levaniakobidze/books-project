@@ -20,7 +20,7 @@ function VideoSlider() {
   ]);
 
   return (
-    <div>
+    <div className="z-1">
       <Splide
         options={{
           breakpoints: {

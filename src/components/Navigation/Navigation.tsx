@@ -74,13 +74,13 @@ function Navigation() {
         className={` absolute top-0 bottom-0  ${
           !showMenu ? "left-[-100%]" : "left-0   custom-transition "
         }  
-        transition-all w-full  bg-gradient-to-r 
-            from-[rgba(0,0,0,0.65)] to-[rgba(0,0,0,0.65)] h-[120vh]
+        transition-all w-full  bg-gradient-to-r  z-[999]
+            from-[rgba(0,0,0,0.65)] to-[rgba(0,0,0,0.65)] h-[120vh] 
    `}></div>
       <div
         className={` ${
           !showMenu ? "left-[-100%] " : "left-0"
-        } px-10 w-[65%] sm:w-full  absolute top-0 bottom-0 sm:max-w-[20%] h-[120vh] bg-black transition-all ease-in-out duration-1000`}
+        } px-10 w-[65%] sm:w-full  absolute top-0 bottom-0 z-[999] sm:max-w-[20%] h-[120vh] bg-black transition-all ease-in-out duration-1000`}
         onClick={handleClick}>
         <div className="text-right mt-5">
           <CloseIcon

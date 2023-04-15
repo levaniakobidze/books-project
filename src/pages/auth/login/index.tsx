@@ -50,11 +50,18 @@ function Login() {
               შესვლა
             </button>
           </div>
-          <Link
-            href={"/auth/register"}
-            className="flex justify-end text-[13px] mt-3 text-[#496885] hover:text-gray-500 cursor-pointer">
-            რეგისტრაცია
-          </Link>
+          <div className="flex items-center justify-between">
+            <Link
+              href={"/auth/forgot_password"}
+              className="flex justify-end text-[13px] mt-3 text-[#496885] hover:text-gray-500 cursor-pointer">
+              დაგავიწყდა პაროლი?
+            </Link>
+            <Link
+              href={"/auth/register"}
+              className="flex justify-end text-[13px] mt-3 text-[#496885] hover:text-gray-500 cursor-pointer">
+              რეგისტრაცია
+            </Link>
+          </div>
         </div>
       </section>
     </Fragment>

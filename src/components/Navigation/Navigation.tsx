@@ -15,7 +15,7 @@ function Navigation() {
   const navigation: InavTypes[] = [
     { name: "მთავარი", href: "/" },
     { name: "წიგნები", href: "/books" },
-    { name: "კატეგორიები", href: "/categorys" },
+    { name: "კატეგორიები", href: "/categories" },
     { name: "ჩემი წიგნები", href: "/my_books" },
     { name: "შესვლა", href: "/auth/login" },
   ];

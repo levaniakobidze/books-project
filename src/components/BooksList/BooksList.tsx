@@ -1,117 +1,16 @@
 import React, { useState } from "react";
-import Image from "next/image";
-import book from "../../../public/assets/book.jpg";
-import book2 from "../../../public/assets/book2.png";
-import book3 from "../../../public/assets/book3.png";
+import Book from "../Book/Book";
+import { useContext } from "react";
+import { BooksContext } from "@/context/books";
+import { IBook } from "@/types/bookTypes";
 
 function BooksList() {
-  const [data, setData] = useState([
-    {
-      id: "2342",
-      img: book,
-      author: "ლევან სამადაშვილი",
-      title: "English grammar",
-      description:
-        "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
-      price: "120",
-    },
-    {
-      id: "2342",
-      img: book2,
-      author: "ლევან სამადაშვილი",
-      title: "English grammar",
-      description:
-        "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
-      price: "120",
-    },
-    {
-      id: "2342",
-      img: book3,
-      author: "ლევან სამადაშვილი",
-      title: "English grammar",
-      description:
-        "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
-      price: "120",
-    },
-    {
-      id: "2342",
-      img: book,
-      author: "ლევან სამადაშვილი",
-      title: "English grammar",
-      description:
-        "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
-      price: "120",
-    },
-    {
-      id: "2342",
-      img: book2,
-      author: "ლევან სამადაშვილი",
-      title: "English grammar",
-      description:
-        "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
-      price: "120",
-    },
-    {
-      id: "2342",
-      img: book3,
-      author: "ლევან სამადაშვილი",
-      title: "English grammar",
-      description:
-        "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
-      price: "120",
-    },
-    {
-      id: "2342",
-      img: book,
-      author: "ლევან სამადაშვილი",
-      title: "English grammar",
-      description:
-        "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
-      price: "120",
-    },
-    {
-      id: "2342",
-      img: book2,
-      author: "ლევან სამადაშვილი",
-      title: "English grammar",
-      description:
-        "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
-      price: "120",
-    },
-  ]);
+  const { books } = useContext(BooksContext);
 
   return (
     <div className=" px-10 mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4 lg:gap-8">
-      {data.map((book, index) => {
-        return (
-          <div className="rounded bg-white shadow-lg" key={index}>
-            <div>
-              <Image
-                className="w-full object-cover  h-[220px]"
-                src={book.img}
-                alt="asda"
-                height={200}
-              />
-            </div>
-            <p className="text-center mt-5  text-sm font-bold">{book.author}</p>
-            <p className=" h-[45px] px-5 text-center mt-5 text-მდ text-gray-500 ">
-              {book.description.substr(0, 40)} ...
-            </p>
-            {/* <p className=" px-5 text-center mt-5 text-მდ font-bold text-gray-900 ">
-              {book.price} ლ
-            </p> */}
-            <div className=" my-5 flex gap-1 justify-between items-center px-10 ">
-              <div className=" rounded-full shadow-xl p-4 flex flex-col justify-center items-center">
-                <p className="font-bold text-sm px-3  text-[#6ca0d1] ">
-                  {book.price}ლ
-                </p>
-              </div>
-              <button className=" rounded-full w-[50%] tracking-wider p-3 hover:bg-transparent transition duration-350 hover:outline hover:text-[#6ca0d1]  font-bold hover:outline-[#6ca0d1] bg-[#6ca0d1]   text-bold text-white">
-                შეძენა
-              </button>
-            </div>
-          </div>
-        );
+      {books.map((book: IBook, index: number) => {
+        return <Book book={book} key={index} />;
       })}
     </div>
   );

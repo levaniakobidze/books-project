@@ -40,7 +40,7 @@ function Navigation() {
         <div className="font-bold text-3xl text-gray-400 cursor-pointer">
           Logo
         </div>
-        <div className="  lg:hidden">
+        <div className="  md:hidden">
           <MenuIcon
             onClick={() => setShowMenu(!showMenu)}
             style={{ fontSize: "44px" }}
@@ -50,7 +50,7 @@ function Navigation() {
           />
         </div>
 
-        <ul className="flex gap-[20px] sm:hidden lg:flex">
+        <ul className="md:flex gap-[20px] hidden  ">
           {navigation.map((nav, index) => {
             return (
               <li className="text-right" key={index}>

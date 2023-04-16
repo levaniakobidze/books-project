@@ -20,13 +20,14 @@ function VideoSlider() {
   ]);
 
   return (
-    <div className="z-1">
+    <div className="z-1 bg-blue-400">
       <Splide
+        className="w-[100%]"
         options={{
           breakpoints: {
             640: {
               perPage: 2,
-              arrows: false,
+              arrows: true,
             },
             525: {
               perPage: 1,
@@ -34,10 +35,9 @@ function VideoSlider() {
             },
           },
 
-          width: "100%",
-          gap: "1rem",
+          // gap: "1rem",
           perPage: 3,
-          arrows: false,
+          arrows: true,
           //   trimSpace: true,
           handslide: true,
           type: "loop",
@@ -50,7 +50,7 @@ function VideoSlider() {
         }}
         aria-label="My Favorite Images">
         {data &&
-          data.map((video: any, index) => {
+          data.map((video: { url: string }, index) => {
             return (
               <SplideSlide key={index}>
                 <iframe

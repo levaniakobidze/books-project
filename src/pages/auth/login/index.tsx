@@ -1,8 +1,11 @@
 import Navigation from "@/components/Navigation/Navigation";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import Link from "next/link";
+import { AuthContext } from "@/context/auth";
 
 function Login() {
+  const { handleLogin } = useContext(AuthContext);
+
   return (
     <Fragment>
       <Navigation />
@@ -46,7 +49,9 @@ function Login() {
           </label>
         </div> */}
           <div>
-            <button className="mt-5 py-3 bg-[#496885] w-full text-white rounded-md hover:bg-[#a1bdd7] ">
+            <button
+              onClick={handleLogin}
+              className="mt-5 py-3 bg-[#496885] w-full text-white rounded-md hover:bg-[#a1bdd7] ">
               შესვლა
             </button>
           </div>

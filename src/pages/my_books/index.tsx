@@ -1,7 +1,18 @@
 import BooksList from "@/components/BooksList/BooksList";
-import React, { Fragment } from "react";
+import React, { FC, Fragment, useEffect, useContext } from "react";
 import Navigation from "@/components/Navigation/Navigation";
-function index() {
+import { AuthContext } from "@/context/auth";
+import { useRouter } from "next/router";
+
+const MyBooks = () => {
+  const { isAuth } = useContext(AuthContext);
+  const router = useRouter();
+  useEffect(() => {
+    if (!isAuth) {
+      router.push("/auth/login");
+    }
+  });
+
   return (
     <Fragment>
       <Navigation />
@@ -10,6 +21,6 @@ function index() {
       </div>
     </Fragment>
   );
-}
+};
 
-export default index;
+export default MyBooks;

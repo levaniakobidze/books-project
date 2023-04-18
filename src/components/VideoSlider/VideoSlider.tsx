@@ -20,7 +20,7 @@ function VideoSlider() {
   ]);
 
   return (
-    <div className="z-1 bg-blue-400">
+    <div className="z-1 bg-blue-400 mb-20">
       <Splide
         className="w-[100%]"
         options={{

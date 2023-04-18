@@ -7,7 +7,7 @@ interface IProps {
 
 const Book: FC<IProps> = ({ book }) => {
   return (
-    <div className="rounded shadow-lg outline outline-blue-100">
+    <div className="rounded shadow-lg outline outline-blue-100 max-h-[400px]">
       <div className="px-3">
         <Image
           className="w-full object-cover  h-[220px]"
@@ -30,6 +30,7 @@ const Book: FC<IProps> = ({ book }) => {
             {book.price}ლ
           </p>
         </div>
+        {/* <p className="text-[13px]">Levan masadashvili</p> */}
         <button className="  rounded-sm  tracking-wider px-3 py-1 text-sm rounded-tl-lg rounded-bl-lg sm:px-5 hover:bg-transparent transition duration-350 hover:outline hover:text-[#6ca0d1]  font-bold hover:outline-[#6ca0d1] bg-[#6ca0d1]   text-bold text-white">
           შეძენა
         </button>

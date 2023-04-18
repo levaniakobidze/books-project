@@ -81,7 +81,7 @@ function Footer() {
         Footer
       </h2>
       <div className="mx-auto max-w-7xl px-6 pb-8  ">
-        <div className=" border-t border-gray-900/10 pt-8  mt-5 lg:flex lg:items-center lg:justify-between">
+        {/* <div className=" border-t border-gray-900/10 pt-8  mt-5 lg:flex lg:items-center lg:justify-between">
           <div>
             <h3 className="text-sm font-semibold leading-6 text-gray-900">
               Subscribe to our newsletter
@@ -139,7 +139,7 @@ function Footer() {
               </button>
             </div>
           </form>
-        </div>
+        </div> */}
         <div className="mt-8 border-t border-gray-900/10 pt-8 md:flex md:items-center md:justify-between">
           <div className="flex space-x-6 md:order-2">
             {navigation.social.map((item) => (

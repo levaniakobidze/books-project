@@ -21,7 +21,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       description:
         "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
       price: "120",
-      category: "სათავგადასავლო",
+      category: "Beginner's English",
     },
 
     {
@@ -32,7 +32,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       description:
         "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
       price: "120",
-      category: "სათავგადასავლო",
+      category: "Advanced English",
     },
     {
       id: "2342",
@@ -42,7 +42,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       description:
         "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
       price: "120",
-      category: "სათავგადასავლო",
+      category: "Advanced English",
     },
     {
       id: "2342",
@@ -52,7 +52,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       description:
         "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
       price: "120",
-      category: "შემეცნებითი",
+      category: "Beginner's English",
     },
     {
       id: "2342",
@@ -62,7 +62,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       description:
         "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
       price: "120",
-      category: "რომანი",
+      category: "Advanced English",
     },
     {
       id: "2342",
@@ -72,7 +72,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       description:
         "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
       price: "120",
-      category: "ბიოგრაფიული",
+      category: "Intermediate English",
     },
     {
       id: "2342",
@@ -82,7 +82,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       description:
         "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
       price: "120",
-      category: "სათავგადასავლო",
+      category: "English Writing",
     },
     {
       id: "2342",
@@ -92,7 +92,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       description:
         "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
       price: "120",
-      category: "დეტექტივი",
+      category: "English Writing",
     },
     {
       id: "2342",
@@ -102,24 +102,20 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       description:
         "„მივენდე ჩემი ბედის ვრასკვლავს და ისე დავადექი გზას, წარმოდგენაც არ მქონდა, რა საოცარი ამბები მელოდა წინ.“",
       price: "120",
-      category: "სათავგადასავლო",
+      category: "Intermediate English",
     },
   ]);
 
   const [categories] = useState([
-    { category: "სათავგადასავლო" },
-    { category: "რომანი" },
-    { category: "შემეცნებითი" },
-    { category: "დეტექტივი" },
-    { category: "დეტექტივი" },
-    { category: "დეტექტივი" },
-    { category: "დეტექტივი" },
-    { category: "დეტექტივი" },
-    { category: "დეტექტივი" },
-    { category: "დეტექტივი" },
-    { category: "დეტექტივი" },
-    { category: "დეტექტივი" },
-    { category: "დეტექტივი" },
+    { category: "Beginner's English" },
+    { category: "Intermediate English" },
+    { category: "Advanced English" },
+    { category: "English Grammar" },
+    { category: "English Vocabulary" },
+    { category: "English Conversation" },
+    { category: "English Writing" },
+    { category: "English Reading Comprehension" },
+    { category: "TOEFL-IELTS Preparation" },
   ]);
   return (
     <BooksContext.Provider value={{ books, categories }}>

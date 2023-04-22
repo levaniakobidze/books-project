@@ -86,7 +86,7 @@ function Navigation() {
                           ? "text-[#6ca0d1] font-bold  border-b-2 py-3 border-blue-400"
                           : "text-gray-400"
                       } hover:text-[#6ca0d1]  py-6  font-bold transition-all text-sm tracking-wider`}>
-                      <nav.icon className="text-md mx-2 text-gray-400" />
+                      <nav.icon className="text-md mx-2 text-gray-400 md:hidden lg:inline" />
                       {nav.name}
                     </button>
                   </Link>
@@ -103,7 +103,7 @@ function Navigation() {
                           ? "text-[#6ca0d1] font-bold  border-b-2 py-3 border-blue-400"
                           : "text-gray-400"
                       } hover:text-[#6ca0d1]  py-6  font-bold transition-all text-sm tracking-wider`}>
-                      <nav.icon className="text-md mx-2" />
+                      <nav.icon className="text-md mx-2  md:hidden lg:inline" />
                       {nav.name}
                     </button>
                   </Link>
@@ -124,7 +124,7 @@ function Navigation() {
               } hover:text-blue-400  rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
               href="/auth/login">
               შესვლა
-              <LoginIcon className="mx-2 text-gray-400" />
+              <LoginIcon className="mx-2 text-gray-400 md:hidden lg:inline" />
             </Link>
           ) : (
             <Link
@@ -138,7 +138,7 @@ function Navigation() {
                   : "text-gray-400"
               }  hover:text-blue-400  bg-white rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
               href="/auth/login">
-              <LogoutIcon className="mx-2" />
+              <LogoutIcon className="mx-2 md:hidden lg:inline" />
               გამოსვლა
             </Link>
           )}
@@ -146,7 +146,7 @@ function Navigation() {
         {isAuth && (
           <div className="hidden md:flex">
             <p className="text-gray-500 cursor-pointer">
-              <PermIdentityIcon className="mx-2 text-gray-500" />
+              <PermIdentityIcon className="mx-2 text-gray-500 md:hidden lg:inline" />
               levan iakobidze
               <KeyboardArrowDownIcon className="cursor-pointer text-md" />
             </p>

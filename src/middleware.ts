@@ -5,10 +5,9 @@ import type { NextRequest } from "next/server";
 export function middleware(req: NextRequest) {
   console.log(req.nextUrl.pathname);
 
-  const jwt = req.cookies.has("jwt");
-  console.log(jwt);
+  const token = req.cookies.has("token");
 
-  if (!jwt) {
+  if (!token) {
     return NextResponse.redirect("http://localhost:3000/auth/login");
   }
 
@@ -16,5 +15,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/my_books", "/categories"],
+  matcher: ["/my_books"],
 };

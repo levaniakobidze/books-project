@@ -1,10 +1,19 @@
 import Navigation from "@/components/Navigation/Navigation";
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import Link from "next/link";
 import { AuthContext } from "@/context/auth";
 
 function Login() {
   const { handleLogin } = useContext(AuthContext);
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+
+  const logIn = () => {
+    handleLogin(credentials);
+  };
 
   return (
     <Fragment>
@@ -26,6 +35,7 @@ function Login() {
               type="email"
               name="email"
               id="email"
+              onChange={handleChange}
               placeholder="შეიყვანეთ სახელი"
               className="mt-3 w-full py-2.5 px-3 bg-[#f0f5f9] border-0 outline-none rounded-lg focus:outline focus:outline-cyan-300  text-sm"
             />
@@ -37,6 +47,7 @@ function Login() {
             <input
               type="password"
               name="password"
+              onChange={handleChange}
               id="password"
               placeholder="შეიყვანეთ პაროლი"
               className="mt-3 w-full py-2.5 px-3 bg-[#f0f5f9] border-0 outline-none rounded-lg focus:outline focus:outline-cyan-300  text-sm"
@@ -50,7 +61,7 @@ function Login() {
         </div> */}
           <div>
             <button
-              onClick={handleLogin}
+              onClick={logIn}
               className="mt-5 py-3 bg-[#496885] w-full text-white rounded-md hover:bg-[#a1bdd7] ">
               შესვლა
             </button>

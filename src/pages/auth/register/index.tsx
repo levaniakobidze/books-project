@@ -1,8 +1,28 @@
 import Navigation from "@/components/Navigation/Navigation";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext, useState } from "react";
+import { AuthContext } from "@/context/auth";
 import Link from "next/link";
 
 function Register() {
+  const { handleRegister } = useContext(AuthContext);
+  const [registerData, setRegisterData] = useState({
+    userName: "",
+    email: "",
+    password: "",
+    backlink: "sadasd",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRegisterData({
+      ...registerData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const register = () => {
+    handleRegister(registerData);
+  };
+
   return (
     <Fragment>
       <Navigation />
@@ -18,25 +38,29 @@ function Register() {
             შეავსე ველები და შედი შენს ანგარიშზე
           </h1> */}
           <div className="mt-10 ">
-            <label htmlFor="text" className="px-1 text-sm text-gray-800">
+            <label htmlFor="userName" className="px-1 text-sm text-gray-800">
               Username
             </label>
             <input
-              type="username"
-              name="text"
-              id="username"
+              type="text"
+              name="userName"
+              id="userName"
+              onChange={handleChange}
+              value={registerData.userName}
               placeholder="შეიყვანეთ Username"
               className="mt-3 w-full py-2.5 px-3 bg-[#f0f5f9] border-0 outline-none rounded-lg focus:outline focus:outline-cyan-300  text-sm"
             />
           </div>
           <div className="mt-5 ">
-            <label htmlFor="text" className="px-1 text-sm text-gray-800">
+            <label htmlFor="email" className="px-1 text-sm text-gray-800">
               ელ.ფოსტა
             </label>
             <input
               type="email"
               name="email"
               id="email"
+              value={registerData.email}
+              onChange={handleChange}
               placeholder="შეიყვანეთ ელ.ფოსტა"
               className="mt-3 w-full py-2.5 px-3 bg-[#f0f5f9] border-0 outline-none rounded-lg focus:outline focus:outline-cyan-300  text-sm"
             />
@@ -49,6 +73,8 @@ function Register() {
               type="password"
               name="password"
               id="password"
+              value={registerData.password}
+              onChange={handleChange}
               placeholder="შეიყვანეთ პაროლი"
               className="mt-3 w-full py-2.5 px-3 bg-[#f0f5f9] border-0 outline-none rounded-lg focus:outline focus:outline-cyan-300  text-sm"
             />
@@ -60,7 +86,9 @@ function Register() {
           </label>
         </div> */}
           <div>
-            <button className="mt-5 py-3 bg-[#496885] w-full text-white rounded-md hover:bg-[#a1bdd7] ">
+            <button
+              onClick={register}
+              className="mt-5 py-3 bg-[#496885] w-full text-white rounded-md hover:bg-[#a1bdd7] ">
               რეგისტრაცია
             </button>
           </div>

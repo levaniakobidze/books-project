@@ -9,6 +9,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AuthContext } from "@/context/auth";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import HomeWorkIcon from "@mui/icons-material/HomeWork";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import StyleIcon from "@mui/icons-material/Style";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
 function Navigation() {
   const [showMenu, setShowMenu] = useState(false);
   const { isAuth, handleLogin, handleLogout } = useContext(AuthContext);
@@ -18,13 +25,24 @@ function Navigation() {
     name: string;
     href: string;
     needAuth: boolean;
+    icon: any;
   }
 
   const navigation: InavTypes[] = [
-    { name: "მთავარი", href: "/", needAuth: false },
-    { name: "წიგნები", href: "/books", needAuth: false },
-    { name: "კატეგორიები", href: "/categories", needAuth: false },
-    { name: "ჩემი წიგნები", href: "/my_books", needAuth: true },
+    { name: "მთავარი", href: "/", needAuth: false, icon: HomeWorkIcon },
+    { name: "წიგნები", href: "/books", needAuth: false, icon: MenuBookIcon },
+    {
+      name: "კატეგორიები",
+      href: "/categories",
+      needAuth: false,
+      icon: StyleIcon,
+    },
+    {
+      name: "ჩემი წიგნები",
+      href: "/my_books",
+      needAuth: true,
+      icon: MenuBookIcon,
+    },
   ];
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -43,7 +61,7 @@ function Navigation() {
 
   return (
     <div>
-      <nav className=" py-5 px-10 flex items-center justify-between z-[100]">
+      <nav className="  px-10 flex items-center justify-between z-[100]">
         <div className="font-bold text-3xl text-gray-400 cursor-pointer">
           Logo
         </div>
@@ -56,39 +74,40 @@ function Navigation() {
             } hover:text-red-500 cursor-pointer `}
           />
         </div>
-
-        <ul className="md:flex gap-[20px] hidden items-center  ">
+        <ul className="md:flex gap-[20px] hidden items-center  h-[100%]  ">
           {navigation.map((nav, index) => {
             if (!isAuth && nav.needAuth === false) {
               return (
                 <li className="text-right" key={index}>
-                  <Link
-                    onClick={() => setShowMenu(false)}
-                    className={` ${
-                      pathname === nav.href
-                        ? "text-[#6ca0d1] font-bold"
-                        : "text-gray-500"
-                    } hover:text-[#6ca0d1] font-bold transition-all text-sm tracking-wider`}
-                    href={nav.href}>
-                    {nav.name}
+                  <Link onClick={() => setShowMenu(false)} href={nav.href}>
+                    <button
+                      className={` ${
+                        pathname === nav.href
+                          ? "text-[#6ca0d1] font-bold  border-b-2 py-3 border-blue-400"
+                          : "text-gray-400"
+                      } hover:text-[#6ca0d1]  py-6  font-bold transition-all text-sm tracking-wider`}>
+                      <nav.icon className="text-md mx-2 text-gray-400" />
+                      {nav.name}
+                    </button>
                   </Link>
                 </li>
               );
             }
             if (isAuth) {
               return (
-                <li className="text-right" key={index}>
-                  <Link
-                    onClick={() => setShowMenu(false)}
-                    className={` ${
-                      pathname === nav.href
-                        ? "text-[#6ca0d1] font-bold"
-                        : "text-gray-500"
-                    } hover:text-[#6ca0d1] font-bold transition-all text-sm tracking-wider`}
-                    href={nav.href}>
-                    {nav.name}
+                <div className="text-right" key={index}>
+                  <Link onClick={() => setShowMenu(false)} href={nav.href}>
+                    <button
+                      className={` ${
+                        pathname === nav.href
+                          ? "text-[#6ca0d1] font-bold  border-b-2 py-3 border-blue-400"
+                          : "text-gray-400"
+                      } hover:text-[#6ca0d1]  py-6  font-bold transition-all text-sm tracking-wider`}>
+                      <nav.icon className="text-md mx-2" />
+                      {nav.name}
+                    </button>
                   </Link>
-                </li>
+                </div>
               );
             }
           })}
@@ -100,11 +119,12 @@ function Navigation() {
               }}
               className={` ${
                 pathname === "/auth/login"
-                  ? " font-bold  bg-blue-400  text-white "
-                  : "text-gray-500"
-              } border hover:bg-blue-400 hover:text-white  border-blue-400  rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
+                  ? " font-bold  text-blue-400 "
+                  : "text-gray-400"
+              } hover:text-blue-400  rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
               href="/auth/login">
               შესვლა
+              <LoginIcon className="mx-2 text-gray-400" />
             </Link>
           ) : (
             <Link
@@ -115,13 +135,23 @@ function Navigation() {
               className={` ${
                 pathname === "/auth/login"
                   ? " font-bold  bg-blue-400  text-white"
-                  : "text-gray-500"
-              } border hover:bg-blue-400 hover:text-white border-blue-400 bg-white rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
+                  : "text-gray-400"
+              }  hover:text-blue-400  bg-white rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
               href="/auth/login">
+              <LogoutIcon className="mx-2" />
               გამოსვლა
             </Link>
           )}
         </ul>
+        {isAuth && (
+          <div className="hidden md:flex">
+            <p className="text-gray-500 cursor-pointer">
+              <PermIdentityIcon className="mx-2 text-gray-500" />
+              levan iakobidze
+              <KeyboardArrowDownIcon className="cursor-pointer text-md" />
+            </p>
+          </div>
+        )}
       </nav>
       <div
         onClick={() => setShowMenu(false)}
@@ -144,6 +174,14 @@ function Navigation() {
           />
         </div>
         <ul className="mt-10">
+          {isAuth && (
+            <div className="flex md:hidden">
+              <p className="text-gray-500 cursor-pointer">
+                <PermIdentityIcon className="mx-2 text-gray-500" />
+                levan iakobidze
+              </p>
+            </div>
+          )}
           {navigation.map((nav, index) => {
             return (
               <li className="mt-5 text-right" key={index}>
@@ -151,30 +189,32 @@ function Navigation() {
                   onClick={() => setShowMenu(false)}
                   className={` ${
                     pathname === nav.href ? "text-[#6ca0d1]" : "text-white"
-                  } hover:text-[#6ca0d1] font-bold transition-all text-lg tracking-wider`}
+                  } hover:text-[#6ca0d1] font-bold transition-all flex justify-start text-lg tracking-wider`}
                   href={nav.href}>
+                  <nav.icon className="text-md mx-2" />
                   {nav.name}
                 </Link>
               </li>
             );
           })}
           {!isAuth ? (
-            <li className="mt-5 text-right">
+            <li className="mt-5 text-left">
               <Link
                 onClick={() => {
                   setShowMenu(false);
                 }}
                 className={` ${
                   pathname === "/auth/login"
-                    ? " font-bold  bg-blue-400  text-white "
+                    ? " font-bold  text-blue-400 "
                     : "text-gray-500"
-                } border hover:bg-blue-400 hover:text-white  border-blue-400  rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
+                }  hover:text-blur-400   rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
                 href="/auth/login">
                 შესვლა
+                <LoginIcon />
               </Link>
             </li>
           ) : (
-            <li className="mt-5 text-right">
+            <li className="mt-5 text-left">
               <Link
                 onClick={() => {
                   handleLogout();
@@ -182,10 +222,11 @@ function Navigation() {
                 }}
                 className={` ${
                   pathname === "/auth/login"
-                    ? " font-bold  bg-blue-400  text-white"
-                    : "text-gray-500"
-                } border hover:bg-blue-400 hover:text-white border-blue-400 bg-white rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
+                    ? " font-bold  text-blue-400 "
+                    : "text-gray-400"
+                }    font-bold transition-all text-sm tracking-wider`}
                 href="/auth/login">
+                <LogoutIcon className="mx-2" />
                 გამოსვლა
               </Link>
             </li>

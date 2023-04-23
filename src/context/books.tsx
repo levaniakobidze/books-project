@@ -115,7 +115,6 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     { category: "English Conversation" },
     { category: "English Writing" },
     { category: "English Reading Comprehension" },
-    { category: "TOEFL-IELTS Preparation" },
   ]);
   return (
     <BooksContext.Provider value={{ books, categories }}>

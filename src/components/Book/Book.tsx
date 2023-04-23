@@ -7,7 +7,7 @@ interface IProps {
 
 const Book: FC<IProps> = ({ book }) => {
   return (
-    <div className="rounded shadow-lg outline outline-blue-100 max-h-[400px]">
+    <div className="rounded shadow-lg  outline outline-blue-100 max-h-[400px]">
       <div className="px-3">
         <Image
           className="w-full object-cover  h-[220px]"

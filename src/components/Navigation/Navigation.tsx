@@ -65,13 +65,13 @@ function Navigation() {
         <div className="font-bold text-3xl text-gray-400 cursor-pointer">
           Logo
         </div>
-        <div className="  md:hidden">
+        <div className="  md:hidden py-5">
           <MenuIcon
             onClick={() => setShowMenu(!showMenu)}
             style={{ fontSize: "44px" }}
             className={`${
               showMenu && "text-red-500"
-            } hover:text-red-500 cursor-pointer `}
+            } hover:text-red-500 cursor-pointer text-gray-400 `}
           />
         </div>
         <ul className="md:flex gap-[20px] hidden items-center  h-[100%]  ">
@@ -83,10 +83,10 @@ function Navigation() {
                     <button
                       className={` ${
                         pathname === nav.href
-                          ? "text-[#6ca0d1] font-bold  border-b-2 py-3 border-blue-400"
+                          ? "text-[#ffadb1] font-bold  border-b-2 py-3 border-blue-400"
                           : "text-gray-400"
-                      } hover:text-[#6ca0d1]  py-6  font-bold transition-all text-sm tracking-wider`}>
-                      <nav.icon className="text-md mx-2 text-gray-400 md:hidden lg:inline" />
+                      } hover:text-[#ffadb1]  py-6  font-bold transition-all text-sm tracking-wider`}>
+                      <nav.icon className="text-[20px] mx-2 text-gray-400 md:hidden lg:inline" />
                       {nav.name}
                     </button>
                   </Link>
@@ -100,10 +100,10 @@ function Navigation() {
                     <button
                       className={` ${
                         pathname === nav.href
-                          ? "text-[#6ca0d1] font-bold  border-b-2 py-3 border-blue-400"
+                          ? "text-[#ffadb1] font-bold  border-b-2 py-3 border-blue-400"
                           : "text-gray-400"
-                      } hover:text-[#6ca0d1]  py-6  font-bold transition-all text-sm tracking-wider`}>
-                      <nav.icon className="text-md mx-2  md:hidden lg:inline" />
+                      } hover:text-[#ffadb1]  py-6  font-bold transition-all text-sm tracking-wider`}>
+                      <nav.icon className="text-[20px] mx-2  md:hidden lg:inline" />
                       {nav.name}
                     </button>
                   </Link>
@@ -123,8 +123,8 @@ function Navigation() {
                   : "text-gray-400"
               } hover:text-blue-400  rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
               href="/auth/login">
+              <LoginIcon className="mx-2 text-[20px] text-gray-400 md:hidden lg:inline" />
               შესვლა
-              <LoginIcon className="mx-2 text-gray-400 md:hidden lg:inline" />
             </Link>
           ) : (
             <Link
@@ -138,7 +138,7 @@ function Navigation() {
                   : "text-gray-400"
               }  hover:text-blue-400  bg-white rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
               href="/auth/login">
-              <LogoutIcon className="mx-2 md:hidden lg:inline" />
+              <LogoutIcon className="mx-2 md:hidden lg:inline text-[20px]" />
               გამოსვლა
             </Link>
           )}
@@ -148,7 +148,7 @@ function Navigation() {
             <p className="text-gray-500 cursor-pointer">
               <PermIdentityIcon className="mx-2 text-gray-500 md:hidden lg:inline" />
               levan iakobidze
-              <KeyboardArrowDownIcon className="cursor-pointer text-md" />
+              <KeyboardArrowDownIcon className="cursor-pointer text-[20px]" />
             </p>
           </div>
         )}
@@ -209,8 +209,8 @@ function Navigation() {
                     : "text-gray-500"
                 }  hover:text-blur-400   rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
                 href="/auth/login">
+                <LoginIcon className="text-[20px]" />
                 შესვლა
-                <LoginIcon />
               </Link>
             </li>
           ) : (
@@ -226,7 +226,7 @@ function Navigation() {
                     : "text-gray-400"
                 }    font-bold transition-all text-sm tracking-wider`}
                 href="/auth/login">
-                <LogoutIcon className="mx-2" />
+                <LogoutIcon className="mx-2 text-[20px]" />
                 გამოსვლა
               </Link>
             </li>

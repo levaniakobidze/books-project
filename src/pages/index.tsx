@@ -8,6 +8,7 @@ import Categories from "./categories";
 import Category from "../components/Category/Category";
 import { BooksContext } from "@/context/books";
 import { ICategory } from "@/types/bookTypes";
+import SearchWord from "@/components/SerachWord/SearchWord";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,6 +37,10 @@ export default function Home() {
           </h1>
           <BooksList />
         </div>
+
+        {/* //////////////////////////////// */}
+        <SearchWord />
+        {/* ///////////////////////////// */}
         <Footer />
       </div>
     </Fragment>

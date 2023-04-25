@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -22,8 +22,13 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [user, setUser] = useState({});
   const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    setLoginError(false);
+  }, [router.asPath]);
   const handleRegister = (registerData: {
     userName: string;
     email: string;
@@ -32,35 +37,22 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   }) => {
     const registerUrl =
       "https://books-project-back-production.up.railway.app/api/register";
-    console.log(registerData);
-
+    setLoading(true);
     axios
       .post(registerUrl, registerData)
       .then((resp) => {
-        console.log(resp);
+        setLoading(false);
         router.push("/auth/login");
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
-    // axios
-    //   .post(registerUrl, {
-    //     userName: "Student",
-    //     email: "studenst@gmail.com",
-    //     password: "studenst123",
-    //     backlink: "formusla1.com",
-    //   })
-    //   .then((resp) => {
-    //     console.log(resp);
-    //     router.push("/auth/login");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   };
   const handleLogin = (credentials: { email: string; password: string }) => {
     const loginUrl =
       "https://books-project-back-production.up.railway.app/api/login";
+    setLoading(true);
     axios
       .post(loginUrl, credentials)
       .then((resp) => {
@@ -68,10 +60,19 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
         setToken(resp.data.token);
         localStorage.setItem("token", resp.data.token);
         Cookies.set("token", resp.data.token);
+        setLoading(false);
         setIsAuth(true);
         router.push("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setLoginError(
+          (Array.isArray(err.response.data) && err.response.data[0].message) ||
+            err.response.data.geo ||
+            err.response.data.en
+        );
+        setLoading(false);
+      });
   };
 
   const handleLogout = () => {
@@ -86,7 +87,14 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuth, handleLogin, handleLogout, handleRegister }}>
+      value={{
+        isAuth,
+        handleLogin,
+        handleLogout,
+        handleRegister,
+        loginError,
+        loading,
+      }}>
       {children}
     </AuthContext.Provider>
   );

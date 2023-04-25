@@ -9,11 +9,13 @@ import Category from "../components/Category/Category";
 import { BooksContext } from "@/context/books";
 import { ICategory } from "@/types/bookTypes";
 import SearchWord from "@/components/SerachWord/SearchWord";
+import Book from "@/components/Book/Book";
+import { IBook } from "@/types/bookTypes";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { categories } = useContext(BooksContext);
+  const { categories, books } = useContext(BooksContext);
   return (
     <Fragment>
       <Navigation />
@@ -35,7 +37,12 @@ export default function Home() {
           <h1 className="text-center mb-10 text-gray-500 font-bold text-2xl tracking-wider">
             წიგნები
           </h1>
-          <BooksList />
+          <div className=" px-5 mx-auto  grid max-w-2xl grid-cols-2 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4 lg:gap-8">
+            {books &&
+              books.slice(0, 4).map((book: IBook, index: number) => {
+                return <Book book={book} key={index} />;
+              })}
+          </div>
         </div>
 
         {/* //////////////////////////////// */}

@@ -1,5 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { IBook } from "@/types/bookTypes";
+import { useContext } from "react";
+import { AuthContext } from "./auth";
 
 interface BooksContextType {
   books: IBook[];
@@ -12,6 +14,8 @@ interface ParentComponentProps {
 }
 
 const ContextProvider = ({ children }: ParentComponentProps) => {
+  const { user, token, isAuth } = useContext(AuthContext);
+  const [showLoginRegisterModal, setShowLoginRegisterModal] = useState(false);
   const [books, setBooks] = useState<IBook[]>([
     {
       id: "2342",
@@ -116,8 +120,26 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     { category: "English Writing" },
     { category: "English Reading Comprehension" },
   ]);
+
+  const handleBuyBook = () => {
+    console.log(token, isAuth);
+    if (!token || !isAuth) {
+      setShowLoginRegisterModal(true);
+      return;
+    } else {
+      setShowLoginRegisterModal(false);
+    }
+  };
+
   return (
-    <BooksContext.Provider value={{ books, categories }}>
+    <BooksContext.Provider
+      value={{
+        books,
+        categories,
+        handleBuyBook,
+        showLoginRegisterModal,
+        setShowLoginRegisterModal,
+      }}>
       {children}
     </BooksContext.Provider>
   );

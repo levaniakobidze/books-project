@@ -24,11 +24,27 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const [showRegisterSuccessModal, setShowRegisterSuccessModal] =
+    useState(false);
   const router = useRouter();
 
   useEffect(() => {
+    console.log(localStorage.getItem("isAuth"));
+    console.log(localStorage.getItem("token"));
+
+    if (localStorage.getItem("isAuth")) {
+      setIsAuth(true);
+    }
+    if (localStorage.getItem("token")) {
+      const token: any = localStorage.getItem("token");
+      setToken(token || null);
+    }
+  }, []);
+  useEffect(() => {
     setLoginError(false);
   }, [router.asPath]);
+
+  // TODO:: Registe function
   const handleRegister = (registerData: {
     userName: string;
     email: string;
@@ -42,13 +58,14 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       .post(registerUrl, registerData)
       .then((resp) => {
         setLoading(false);
-        router.push("/auth/login");
+        setShowRegisterSuccessModal(true);
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
       });
   };
+  // TODO:: Login function
   const handleLogin = (credentials: { email: string; password: string }) => {
     const loginUrl =
       "https://books-project-back-production.up.railway.app/api/login";
@@ -59,6 +76,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
         setUser(resp.data);
         setToken(resp.data.token);
         localStorage.setItem("token", resp.data.token);
+        localStorage.setItem("isAuth", "true");
         Cookies.set("token", resp.data.token);
         setLoading(false);
         setIsAuth(true);
@@ -78,6 +96,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   const handleLogout = () => {
     setIsAuth(false);
     Cookies.remove("token");
+    Cookies.remove("isAuth");
     localStorage.removeItem("token");
     setIsAuth(false);
     setUser({});
@@ -88,12 +107,16 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   return (
     <AuthContext.Provider
       value={{
+        user,
+        token,
         isAuth,
         handleLogin,
         handleLogout,
         handleRegister,
         loginError,
         loading,
+        showRegisterSuccessModal,
+        setShowRegisterSuccessModal,
       }}>
       {children}
     </AuthContext.Provider>

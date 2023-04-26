@@ -1,11 +1,14 @@
 import React, { FC } from "react";
 import Image from "next/image";
 import { IBook } from "@/types/bookTypes";
+import { useContext } from "react";
+import { BooksContext } from "@/context/books";
 interface IProps {
   book: IBook;
 }
 
 const Book: FC<IProps> = ({ book }) => {
+  const { handleBuyBook } = useContext(BooksContext);
   return (
     <div className="rounded shadow-lg  outline outline-blue-100 max-h-[400px]">
       <div className="px-3">
@@ -31,7 +34,9 @@ const Book: FC<IProps> = ({ book }) => {
           </p>
         </div>
         {/* <p className="text-[13px]">Levan masadashvili</p> */}
-        <button className="  rounded-sm  tracking-wider px-3 py-1 text-sm rounded-tl-lg rounded-bl-lg sm:px-5 hover:bg-transparent transition duration-350 hover:outline hover:text-[#6ca0d1]  font-bold hover:outline-[#6ca0d1] bg-[#6ca0d1]   text-bold text-white">
+        <button
+          onClick={handleBuyBook}
+          className="  rounded-sm  tracking-wider px-3 py-1 text-sm rounded-tl-lg rounded-bl-lg sm:px-5 hover:bg-transparent transition duration-350 hover:outline hover:text-[#6ca0d1]  font-bold hover:outline-[#6ca0d1] bg-[#6ca0d1]   text-bold text-white">
           შეძენა
         </button>
       </div>

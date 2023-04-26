@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation/Navigation";
 import React, { Fragment, useContext, useState } from "react";
 import { AuthContext } from "@/context/auth";
 import Link from "next/link";
+import RegsietrSucces from "../../../components/Modals/RegisterSuccess/RegisterSuccess";
 
 function Register() {
   const { handleRegister, loading } = useContext(AuthContext);
@@ -46,6 +47,7 @@ function Register() {
   return (
     <Fragment>
       <Navigation />
+      <RegsietrSucces />
       <section className="px-3 py-10 w-ful h-screen flex flex-col    bg-gradient-to-r to-tl from-[#c7d8e8] to-[#fde6e7]">
         <div className=" text-center my-5 ">
           <h1 className="text-gray-500 text-4xl font-bold tracking-wider ">

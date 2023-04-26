@@ -11,6 +11,7 @@ import { ICategory } from "@/types/bookTypes";
 import SearchWord from "@/components/SerachWord/SearchWord";
 import Book from "@/components/Book/Book";
 import { IBook } from "@/types/bookTypes";
+import LoginRegister from "../components/Modals/LoginRegister/LoginRegister";
 
 const inter = Inter({ subsets: ["latin"] });
 

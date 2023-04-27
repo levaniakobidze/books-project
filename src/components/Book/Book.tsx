@@ -3,6 +3,7 @@ import Image from "next/image";
 import { IBook } from "@/types/bookTypes";
 import { useContext } from "react";
 import { BooksContext } from "@/context/books";
+import Link from "next/link";
 interface IProps {
   book: IBook;
 }
@@ -10,7 +11,9 @@ interface IProps {
 const Book: FC<IProps> = ({ book }) => {
   const { handleBuyBook } = useContext(BooksContext);
   return (
-    <div className="rounded shadow-lg  outline outline-blue-100 max-h-[400px]">
+    <Link
+      href={`/my_books/${book.id}`}
+      className="rounded shadow-lg  outline outline-blue-100 max-h-[400px]">
       <div className="px-3">
         <Image
           className="w-full object-cover  h-[220px]"
@@ -43,7 +46,7 @@ const Book: FC<IProps> = ({ book }) => {
       <p className=" hidden sm:flex mb-3   px-5 text-center mt-5 text-მდ text-gray-500 ">
         {book.description.substr(0, 50)} ...
       </p>
-    </div>
+    </Link>
   );
 };
 

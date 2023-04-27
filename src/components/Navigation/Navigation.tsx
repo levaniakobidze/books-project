@@ -16,6 +16,8 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import StyleIcon from "@mui/icons-material/Style";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
+import InfoIcon from "@mui/icons-material/Info";
+
 function Navigation() {
   const [showMenu, setShowMenu] = useState(false);
   const { isAuth, handleLogin, handleLogout } = useContext(AuthContext);
@@ -42,6 +44,12 @@ function Navigation() {
       href: "/my_books",
       needAuth: true,
       icon: MenuBookIcon,
+    },
+    {
+      name: "ჩვენს შესახებ",
+      href: "/about",
+      needAuth: false,
+      icon: InfoIcon,
     },
   ];
 

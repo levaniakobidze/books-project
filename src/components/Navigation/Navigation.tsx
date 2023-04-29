@@ -17,6 +17,8 @@ import StyleIcon from "@mui/icons-material/Style";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import InfoIcon from "@mui/icons-material/Info";
+import Dropdown from "../../components/Dropdown/Dropdown";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 function Navigation() {
   const [showMenu, setShowMenu] = useState(false);
@@ -73,7 +75,7 @@ function Navigation() {
         <div className="font-bold text-3xl text-gray-400 cursor-pointer">
           Logo
         </div>
-        <div className="  md:hidden py-5">
+        <div className="  lg:hidden py-5">
           <MenuIcon
             onClick={() => setShowMenu(!showMenu)}
             style={{ fontSize: "44px" }}
@@ -82,7 +84,7 @@ function Navigation() {
             } hover:text-red-500 cursor-pointer text-gray-400 `}
           />
         </div>
-        <ul className="md:flex gap-[20px] hidden items-center  h-[100%]  ">
+        <ul className="lg:flex gap-[20px] hidden items-center  h-[100%]  ">
           {navigation.map((nav, index) => {
             if (!isAuth && nav.needAuth === false) {
               return (
@@ -120,7 +122,7 @@ function Navigation() {
             }
           })}
 
-          {!isAuth ? (
+          {!isAuth && (
             <Link
               onClick={() => {
                 setShowMenu(false);
@@ -134,30 +136,11 @@ function Navigation() {
               <LoginIcon className="mx-2 text-[20px] text-gray-400 md:hidden lg:inline" />
               შესვლა
             </Link>
-          ) : (
-            <Link
-              onClick={() => {
-                handleLogout();
-                setShowMenu(false);
-              }}
-              className={` ${
-                pathname === "/auth/login"
-                  ? " font-bold  bg-blue-400  text-white"
-                  : "text-gray-400"
-              }  hover:text-blue-400  bg-white rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
-              href="/auth/login">
-              <LogoutIcon className="mx-2 md:hidden lg:inline text-[20px]" />
-              გამოსვლა
-            </Link>
           )}
         </ul>
         {isAuth && (
-          <div className="hidden md:flex">
-            <p className="text-gray-500 cursor-pointer">
-              <PermIdentityIcon className="mx-2 text-gray-500 md:hidden lg:inline" />
-              levan iakobidze
-              <KeyboardArrowDownIcon className="cursor-pointer text-[20px]" />
-            </p>
+          <div className="hidden lg:block">
+            <Dropdown username="levaniakobidze" />
           </div>
         )}
       </nav>
@@ -172,7 +155,7 @@ function Navigation() {
       <div
         className={` ${
           !showMenu ? "left-[-100%] " : "left-0"
-        } px-10 w-[65%] sm:w-full  absolute top-0 bottom-0 z-[999] sm:max-w-[20%] h-[120vh] bg-black transition-all ease-in-out duration-1000`}
+        } px-10 w-[80%] sm:w-full  absolute top-0 bottom-0 z-[999] sm:max-w-[40%] h-[120vh] bg-black transition-all ease-in-out duration-1000`}
         onClick={handleClick}>
         <div className="text-right mt-5">
           <CloseIcon
@@ -182,14 +165,7 @@ function Navigation() {
           />
         </div>
         <ul className="mt-10">
-          {isAuth && (
-            <div className="flex md:hidden">
-              <p className="text-gray-500 cursor-pointer">
-                <PermIdentityIcon className="mx-2 text-gray-500" />
-                levan iakobidze
-              </p>
-            </div>
-          )}
+          {isAuth && <Dropdown username="levaniakobidze" />}
           {navigation.map((nav, index) => {
             return (
               <li className="mt-5 text-right" key={index}>
@@ -205,6 +181,16 @@ function Navigation() {
               </li>
             );
           })}
+          <li>
+            <Link
+              href={"/settings"}
+              className={` ${
+                pathname === "settings" ? "text-[#6ca0d1]" : "text-white"
+              } hover:text-[#6ca0d1] font-bold transition-all flex justify-start text-lg mt-5 tracking-wider`}>
+              <SettingsIcon className="text-md mx-2" />
+              პარამეტრები
+            </Link>
+          </li>
           {!isAuth ? (
             <li className="mt-5 text-left">
               <Link

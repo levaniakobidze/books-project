@@ -14,6 +14,25 @@ body {
   font-family: "Noto Sans Georgian", sans-serif;
 }
 
+.loader {
+  width: 28px;
+  height: 28px;
+  border: 5px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 @keyframes opacity-animation {
   from {
     opacity: 0;

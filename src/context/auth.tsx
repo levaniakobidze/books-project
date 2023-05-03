@@ -7,11 +7,6 @@ interface AuthContextType {
   user: {};
 }
 
-// {
-//   email: "iakobidze2@gmail.com",
-//   password: "iakobidze123",
-// }
-
 export const AuthContext = createContext<AuthContextType | null | any>(null);
 
 interface ParentComponentProps {
@@ -21,7 +16,7 @@ interface ParentComponentProps {
 const ContextProvider = ({ children }: ParentComponentProps) => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [user, setUser] = useState({});
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState({});
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [showRegisterSuccessModal, setShowRegisterSuccessModal] =
@@ -29,14 +24,16 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(localStorage.getItem("isAuth"));
-    console.log(localStorage.getItem("token"));
-
-    if (localStorage.getItem("isAuth")) {
+    const token: any = localStorage.getItem("token");
+    const userFromStorage = localStorage.getItem("user");
+    const storageUser = userFromStorage ? JSON.parse(userFromStorage) : null;
+    if (
+      localStorage.getItem("isAuth") &&
+      localStorage.getItem("user") &&
+      localStorage.getItem("token")
+    ) {
       setIsAuth(true);
-    }
-    if (localStorage.getItem("token")) {
-      const token: any = localStorage.getItem("token");
+      setUser(storageUser);
       setToken(token || null);
     }
   }, []);
@@ -76,6 +73,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
         setUser(resp.data);
         setToken(resp.data.token);
         localStorage.setItem("token", resp.data.token);
+        localStorage.setItem("user", JSON.stringify(resp.data));
         localStorage.setItem("isAuth", "true");
         Cookies.set("token", resp.data.token);
         setLoading(false);
@@ -98,9 +96,11 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     Cookies.remove("token");
     Cookies.remove("isAuth");
     localStorage.removeItem("token");
+    localStorage.removeItem("isAuth");
+    localStorage.removeItem("user");
     setIsAuth(false);
     setUser({});
-    setToken(null);
+    setToken("");
     router.push("/");
   };
 

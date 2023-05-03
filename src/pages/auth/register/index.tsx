@@ -2,7 +2,7 @@ import Navigation from "@/components/Navigation/Navigation";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/context/auth";
 import Link from "next/link";
-import RegsietrSucces from "../../../components/Modals/RegisterSuccess/RegisterSuccess";
+import RegsietrSucces from "../../../components/Modals/Verify_email/RegisterSuccess";
 
 function Register() {
   const { handleRegister, loading } = useContext(AuthContext);
@@ -24,7 +24,10 @@ function Register() {
   }
 
   useEffect(() => {
-    setRegisterData({ ...registerData, backlink: host });
+    setRegisterData({
+      ...registerData,
+      backlink: host + "/email_verification",
+    });
   }, [host]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

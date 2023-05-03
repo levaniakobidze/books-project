@@ -22,7 +22,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 
 function Navigation() {
   const [showMenu, setShowMenu] = useState(false);
-  const { isAuth, handleLogin, handleLogout } = useContext(AuthContext);
+  const { isAuth, user, handleLogin, handleLogout } = useContext(AuthContext);
   const { pathname } = useRouter();
 
   interface InavTypes {
@@ -140,7 +140,7 @@ function Navigation() {
         </ul>
         {isAuth && (
           <div className="hidden lg:block">
-            <Dropdown username="levaniakobidze" />
+            <Dropdown username={user.userName} />
           </div>
         )}
       </nav>
@@ -165,7 +165,7 @@ function Navigation() {
           />
         </div>
         <ul className="mt-10">
-          {isAuth && <Dropdown username="levaniakobidze" />}
+          {isAuth && <Dropdown username={user.userName} />}
           {navigation.map((nav, index) => {
             return (
               <li className="mt-5 text-right" key={index}>

@@ -3,6 +3,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { AuthContext } from "@/context/auth";
 import PersonIcon from "@mui/icons-material/Person";
+import Link from "next/link";
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
@@ -35,14 +36,14 @@ const Dwopdown = (props: { username: string }) => {
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                <Link
+                  href="/settings"
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block px-4 py-2 text-sm"
                   )}>
                   პარამეტრები
-                </a>
+                </Link>
               )}
             </Menu.Item>
           </div>

@@ -181,17 +181,8 @@ function Navigation() {
               </li>
             );
           })}
-          <li>
-            <Link
-              href={"/settings"}
-              className={` ${
-                pathname === "settings" ? "text-[#6ca0d1]" : "text-white"
-              } hover:text-[#6ca0d1] font-bold transition-all flex justify-start text-lg mt-5 tracking-wider`}>
-              <SettingsIcon className="text-md mx-2" />
-              პარამეტრები
-            </Link>
-          </li>
-          {!isAuth ? (
+
+          {!isAuth && (
             <li className="mt-5 text-left">
               <Link
                 onClick={() => {
@@ -200,28 +191,11 @@ function Navigation() {
                 className={` ${
                   pathname === "/auth/login"
                     ? " font-bold  text-blue-400 "
-                    : "text-gray-500"
+                    : "text-blue-500"
                 }  hover:text-blur-400   rounded-2xl  p-3 font-bold transition-all text-sm tracking-wider`}
                 href="/auth/login">
-                <LoginIcon className="text-[20px]" />
+                <LoginIcon className="text-[20px]  mr-2" />
                 შესვლა
-              </Link>
-            </li>
-          ) : (
-            <li className="mt-5 text-left">
-              <Link
-                onClick={() => {
-                  handleLogout();
-                  setShowMenu(false);
-                }}
-                className={` ${
-                  pathname === "/auth/login"
-                    ? " font-bold  text-blue-400 "
-                    : "text-gray-400"
-                }    font-bold transition-all text-sm tracking-wider`}
-                href="/auth/login">
-                <LogoutIcon className="mx-2 text-[20px]" />
-                გამოსვლა
               </Link>
             </li>
           )}

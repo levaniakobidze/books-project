@@ -3,11 +3,14 @@ import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { AuthContext } from "@/context/auth";
 import Link from "next/link";
-import { error } from "console";
 
-export default function Email_verified(props: { error: string }) {
-  const [showModal, setShowModal] = useState(true);
-
+export default function Email_sent({
+  showModal,
+  setShowModal,
+}: {
+  showModal: boolean;
+  setShowModal: any;
+}) {
   return (
     <Transition.Root show={showModal} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setShowModal}>
@@ -44,26 +47,16 @@ export default function Email_verified(props: { error: string }) {
                     <Dialog.Title
                       as="h3"
                       className="text-base font-semibold leading-6 text-gray-900">
-                      {props.error ? "404" : "გილოცავ"}
+                      დაადასტურე ელ.ფოსტა
                     </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
-                        {props.error
-                          ? "გვერდი არ მოიძებნა"
-                          : "შენი ანგარიში გააქტიურდა"}
+                        შენს ელ.ფოსტის მისამართზე გაიგზავნა შეტყობინება
                       </p>
                     </div>
                   </div>
                 </div>
-                {!props.error && (
-                  <div className="mt-5 sm:mt-6">
-                    <Link
-                      href="/auth/login"
-                      className="mt-3 inline-flex w-full justify-center rounded-md bg-blue-400 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0">
-                      შესვლა
-                    </Link>
-                  </div>
-                )}
+                <div className="mt-5 sm:mt-6"></div>
               </Dialog.Panel>
             </Transition.Child>
           </div>

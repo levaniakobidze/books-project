@@ -1,11 +1,32 @@
 import Navigation from "@/components/Navigation/Navigation";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import Link from "next/link";
+import axios from "axios";
+import Email_sent from "@/components/Modals/Email_sent/Email_sent";
 
 function Forgot_password() {
+  const [email, setEmail] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = async () => {
+    const host = window.location.host + "/new_password";
+    let url =
+      "https://books-project-back-production.up.railway.app/api/user/password-sendlink";
+    try {
+      setLoading(true);
+      await axios.post(url, { email, redirectLink: host });
+      setShowModal(true);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Fragment>
       <Navigation />
+      <Email_sent showModal={showModal} setShowModal={setShowModal} />
       <section className="px-3 py-10 w-full h-screen flex flex-col    bg-gradient-to-r to-tl from-[#c7d8e8] to-[#fde6e7]">
         <div className=" text-center my-5 ">
           <h1 className="text-gray-500 text-4xl font-bold ">
@@ -25,6 +46,8 @@ function Forgot_password() {
               type="email"
               name="email"
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="შეიყვანეთ ელ.ფოსტა"
               className="mt-3 w-full py-2.5 px-3 bg-[#f0f5f9] border-0 outline-none rounded-lg focus:outline focus:outline-cyan-300  text-sm"
             />
@@ -37,8 +60,12 @@ function Forgot_password() {
           </label>
         </div> */}
           <div>
-            <button className="mt-5 py-3 bg-[#496885] w-full text-white rounded-md hover:bg-[#a1bdd7] ">
-              შესვლა
+            <button
+              disabled={loading}
+              onClick={onSubmit}
+              className="mt-5 py-3 bg-[#496885] w-full text-white rounded-md hover:bg-[#a1bdd7] ">
+              {!loading && <p>გაგზავნა</p>}
+              {loading && <span className="loader"></span>}
             </button>
           </div>
           <div className="flex items-center justify-end">

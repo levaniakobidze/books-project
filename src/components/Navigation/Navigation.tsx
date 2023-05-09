@@ -19,6 +19,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import InfoIcon from "@mui/icons-material/Info";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import SettingsIcon from "@mui/icons-material/Settings";
+import LiveHelpIcon from "@mui/icons-material/LiveHelp";
 
 function Navigation() {
   const [showMenu, setShowMenu] = useState(false);
@@ -52,6 +53,12 @@ function Navigation() {
       href: "/about",
       needAuth: false,
       icon: InfoIcon,
+    },
+    {
+      name: "ინსტრუქცია",
+      href: "/instruction",
+      needAuth: false,
+      icon: LiveHelpIcon,
     },
   ];
 

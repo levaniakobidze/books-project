@@ -45,13 +45,13 @@ const Instruction = () => {
   return (
     <Fragment>
       <Navigation />
-      <section className="relative py-20 overflow-hidden bg-gray-50">
+      <section className="relative py-20 overflow-hidden bg-gradient-to-r to-tl from-[#c7d8e8] to-[#fde6e7]">
         {/* <img className="absolute top-0 left-0 mt-44" src="saturn-assets/images/faq/light-blue-left.png" alt=""> */}
         {/* <img className="absolute top-0 right-0 mt-10" src="saturn-assets/images/faq/star-right.svg" alt=""> */}
         <div className="relative container px-4 mx-auto">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-10 md:mb-24">
-              <span className="inline-block py-1 px-3 mb-4 text-xs font-semibold text-orange-900 bg-orange-50 rounded-full">
+              <span className="inline-block py-1 px-3 mb-4 text-xs font-semibold text-orange-900 bg-gradient-to-r to-tl from-[#c7d8e8] to-[#fde6e7] rounded-full">
                 ხშირად დასმული კითხვები
               </span>
               <h1 className="font-heading mt-5 text-3xl xs:text-3xl md:text-4xl font-bold text-gray-400">

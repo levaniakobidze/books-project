@@ -41,7 +41,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     setLoginError(false);
   }, [router.asPath]);
 
-  // TODO:: Registe function
+  // TODO:: Register function
   const handleRegister = (registerData: {
     userName: string;
     email: string;
@@ -90,6 +90,8 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
         setLoading(false);
       });
   };
+
+  // TODO: Logout function
 
   const handleLogout = () => {
     setIsAuth(false);

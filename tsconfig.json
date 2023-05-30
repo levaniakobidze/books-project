@@ -18,6 +18,12 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/middleware.tse.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/middleware.tse.ts",
+    "src/components/Editor/Editor.jsx"
+  ],
   "exclude": ["node_modules"]
 }

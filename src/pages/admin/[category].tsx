@@ -19,6 +19,7 @@ import { BsClockHistory } from "react-icons/bs";
 import { MdOutlineCancel } from "react-icons/md";
 import { GiProgression } from "react-icons/gi";
 import AddBook from "@/components/Admin_components/AddBook/AddBook";
+import BooksList from "@/components/BooksList/BooksList";
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -60,6 +61,8 @@ const Index: FC = () => {
     switch (category) {
       case "add_book":
         return <AddBook />;
+      case "admin_books":
+        return <BooksList />;
       default:
         break;
     }

@@ -23,7 +23,7 @@
     "**/*.ts",
     "**/*.tsx",
     "src/middleware.tse.ts",
-    "src/components/Editor/Editor.jsx"
+    "src/components/Admin_components/Editor/Editor.jsx"
   ],
   "exclude": ["node_modules"]
 }

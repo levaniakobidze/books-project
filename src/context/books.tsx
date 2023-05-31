@@ -16,6 +16,13 @@ interface ParentComponentProps {
 const ContextProvider = ({ children }: ParentComponentProps) => {
   const { user, token, isAuth } = useContext(AuthContext);
   const [showLoginRegisterModal, setShowLoginRegisterModal] = useState(false);
+  const [bookContent, setBookContent] = useState({ title: "", pages: [] });
+  const [bookTitle, setBookTitle] = useState("");
+  const [pagetTitle, setPageTitle] = useState("");
+  const [pageContent, setPageContent] = useState({
+    pageIndex: "",
+    content: "",
+  });
   const [books, setBooks] = useState<IBook[]>([
     {
       id: "23242",
@@ -135,7 +142,15 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     <BooksContext.Provider
       value={{
         books,
+        bookContent,
+        setBookContent,
         categories,
+        bookTitle,
+        pagetTitle,
+        pageContent,
+        setPageContent,
+        setPageTitle,
+        setBookTitle,
         handleBuyBook,
         showLoginRegisterModal,
         setShowLoginRegisterModal,

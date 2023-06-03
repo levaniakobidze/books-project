@@ -1,9 +1,13 @@
 import React, { useContext, useRef, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { BooksContext } from "@/context/books";
+import { useDropzone } from "react-dropzone";
+import Image from "next/image";
+import axios from "axios";
 
 const TextEditor = () => {
   const editorRef = useRef(null);
+  const categoryRef = useRef(null);
 
   const {
     bookContent,
@@ -22,15 +26,17 @@ const TextEditor = () => {
   };
 
   const uploadHandler = () => {
-    const page = { title: pagetTitle, content: editorRef.current.getContent() };
-    setBookContent((prev) =>
-      !prev.title
-        ? { title: bookTitle, pages: [...prev.pages, page] }
-        : { title: prev.title, pages: [...prev.pages, page] }
-    );
+    const page = {
+      title: pagetTitle,
+      content: editorRef.current.getContent(),
+      audio: "asda",
+    };
+    setBookContent((prev) => ({ ...prev, pages: [...prev.pages, page] }));
     editorRef.current.setContent("");
     setPageTitle("");
     window.scrollTo(0, 0);
+
+    console.log(bookContent);
   };
 
   const editHandler = () => {
@@ -41,6 +47,7 @@ const TextEditor = () => {
       ...updatedPages[pageContent.pageIndex],
       title: pagetTitle,
       content: newPageContent,
+      audio: "",
     };
 
     setBookContent((prevBook) => ({
@@ -67,25 +74,214 @@ const TextEditor = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: "image/*",
+    multiple: false,
+    onDrop: (acceptedFiles) => {
+      const file = acceptedFiles[0];
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64String = reader.result;
+        setBookContent((prev) => ({ ...prev, poster: base64String }));
+      };
+
+      reader.readAsDataURL(file);
+    },
+  });
+
+  const addCategory = () => {
+    const category = categoryRef.current.value;
+    if (category) {
+      setBookContent((prev) => ({
+        ...prev,
+        categories: [...prev.categories, Number(category)],
+      }));
+    }
+    categoryRef.current.value = "";
+  };
+
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.setContent(pageContent.content || "");
     }
   }, [pageContent]);
 
+  const upload = async () => {
+    try {
+      await axios.post(
+        "https://books-project-back-production.up.railway.app/api/books",
+        bookContent
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <form className="mb-5">
         <div class="relative">
+          <label
+            for="message"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            წიგნის სათაური
+          </label>
+          <input
+            type="search"
+            id="default-search"
+            class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="სათაური"
+            value={bookContent.title}
+            onChange={(e) =>
+              setBookContent((prev) => ({ ...prev, title: e.target.value }))
+            }
+            required
+          />
+        </div>
+        <div class="relative mt-5">
+          <label
+            for="message"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            წიგნის ავტორი
+          </label>
           <input
             type="search"
             id="default-search"
             class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="შეიყვანეთ წიგნის სათაური"
-            value={bookTitle}
-            onChange={(e) => setBookTitle(e.target.value)}
+            value={bookContent.author}
+            onChange={(e) =>
+              setBookContent((prev) => ({ ...prev, author: e.target.value }))
+            }
             required
           />
+        </div>
+        <div className="flex gap-5">
+          <div class="relative mt-5">
+            <label
+              for="message"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              წიგნის პოსტერი
+            </label>
+            <div
+              class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              {...getRootProps()}>
+              <p className="text-gray-500  cursor-pointer">დაამატე</p>
+              <input
+                {...getInputProps()}
+                type="file"
+                id="default-search"
+                placeholder="შეიყვანეთ წიგნის სათაური"
+                value={bookTitle}
+                required
+              />
+            </div>
+            {bookContent.poster && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                className="w-[100px] mt-5 "
+                src={bookContent.poster}
+                alt="Selected"
+              />
+            )}
+          </div>
+          <div class="relative mt-5">
+            <label
+              for="message"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              წიგნის ფასი
+            </label>
+            <input
+              type="number"
+              id="default-search"
+              class="block w-full p-4 pl-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="შეიყვანეთ წიგნის სათაური"
+              value={bookContent.price}
+              onChange={(e) =>
+                setBookContent((prev) => ({
+                  ...prev,
+                  price: Number(e.target.value),
+                }))
+              }
+              required
+            />
+          </div>
+        </div>
+        <div class="relative mt-5">
+          <label
+            for="message"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            წიგნის კატეგორიები
+          </label>
+          <div className="gap-2 flex justify-between w-full p-4 pl-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <input
+              type="text"
+              id="default-search"
+              className="border-0 outline-0"
+              placeholder="შეიყვანეთ წიგნის სათაური"
+              ref={categoryRef}
+              required
+            />
+            <button
+              onClick={addCategory}
+              type="button"
+              className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1 mr-2  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+              დამატება
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-3 mt-5">
+          {bookContent.categories?.map((category, index) => {
+            return (
+              <div
+                onClick={() => {
+                  let categories = [...bookContent.categories];
+                  categories = categories.filter(
+                    (category, catIndex) => catIndex !== index
+                  );
+                  setBookContent((prev) => ({
+                    ...prev,
+                    categories: categories,
+                  }));
+                }}
+                key={index}
+                className="flex items-center bg-blue-500 text-white rounded-full px-3 py-1">
+                <span className="mr-2">{category}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 cursor-pointer"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-5">
+          <label
+            for="message"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            წიგნის აღწერა
+          </label>
+          <textarea
+            id="message"
+            rows="4"
+            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Write your thoughts here..."
+            onChange={(e) =>
+              setBookContent((prev) => ({
+                ...prev,
+                description: e.target.value,
+              }))
+            }></textarea>
         </div>
       </form>
 
@@ -164,7 +360,12 @@ const TextEditor = () => {
       <div className="mt-5">
         {pageContent.content && (
           <button
-            disabled={!pagetTitle || !bookTitle}
+            disabled={
+              !bookContent.title ||
+              !bookContent.description ||
+              !bookContent.price ||
+              !bookContent.author
+            }
             onClick={editHandler}
             type="button"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
@@ -173,7 +374,12 @@ const TextEditor = () => {
         )}
 
         <button
-          disabled={!pagetTitle || !bookTitle}
+          // disabled={
+          //   !bookContent.title ||
+          //   !bookContent.description ||
+          //   !bookContent.price ||
+          //   !bookContent.author
+          // }
           onClick={uploadHandler}
           type="button"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
@@ -186,6 +392,7 @@ const TextEditor = () => {
           გვერდის წაშლა
         </button>
         <button
+          onClick={upload}
           type="button"
           className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
           ატვირთვა

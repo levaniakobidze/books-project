@@ -2,6 +2,7 @@ import { createContext, ReactNode, useState } from "react";
 import { IBook } from "@/types/bookTypes";
 import { useContext } from "react";
 import { AuthContext } from "./auth";
+import axios from "axios";
 
 interface BooksContextType {
   books: IBook[];
@@ -16,7 +17,15 @@ interface ParentComponentProps {
 const ContextProvider = ({ children }: ParentComponentProps) => {
   const { user, token, isAuth } = useContext(AuthContext);
   const [showLoginRegisterModal, setShowLoginRegisterModal] = useState(false);
-  const [bookContent, setBookContent] = useState({ title: "", pages: [] });
+  const [bookContent, setBookContent] = useState({
+    title: "ddd",
+    poster: "",
+    author: "",
+    price: "",
+    description: "",
+    categories: [],
+    pages: [],
+  });
   const [bookTitle, setBookTitle] = useState("");
   const [pagetTitle, setPageTitle] = useState("");
   const [pageContent, setPageContent] = useState({
@@ -116,6 +125,10 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       category: "Intermediate English",
     },
   ]);
+
+  const getAllBooks = async () => {
+    const resp = axios.get("");
+  };
 
   const [categories] = useState([
     { category: "Beginner's English" },

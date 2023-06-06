@@ -20,6 +20,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import { GiProgression } from "react-icons/gi";
 import AddBook from "@/components/Admin_components/AddBook/AddBook";
 import BooksList from "@/components/BooksList/BooksList";
+import Categories from "../../components/Admin_components/Categories/Categories";
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -34,6 +35,12 @@ const Index: FC = () => {
     {
       name: "წიგნის დამატება",
       href: "/admin/add_book",
+      icon: AiOutlineDollar,
+      current: true,
+    },
+    {
+      name: "წიგნის კატეგორიები",
+      href: "/admin/admin_categories",
       icon: AiOutlineDollar,
       current: true,
     },
@@ -61,6 +68,8 @@ const Index: FC = () => {
     switch (category) {
       case "add_book":
         return <AddBook />;
+      case "admin_categories":
+        return <Categories />;
       case "admin_books":
         return <BooksList />;
       default:

@@ -13,7 +13,7 @@ const Book: FC<IProps> = ({ book }) => {
   return (
     <Link
       href={`/my_books/${book.id}`}
-      className="rounded shadow-lg  outline outline-blue-100 max-h-[400px]">
+      className="rounded shadow-lg  border max-h-[400px]">
       <div className="px-3">
         <img
           className="w-full object-cover  h-[220px]"

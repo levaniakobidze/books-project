@@ -10,5 +10,7 @@ export interface IBook {
 }
 
 export interface ICategory {
-  category: string;
+  _id: string;
+  title: string;
+  id: number;
 }

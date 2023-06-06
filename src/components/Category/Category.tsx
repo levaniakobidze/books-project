@@ -8,9 +8,9 @@ interface IProps {
 const Category: FC<IProps> = ({ category }) => {
   return (
     <Link
-      onClick={() => localStorage.setItem("category", category.category)}
+      onClick={() => localStorage.setItem("category", category.title)}
       href={{
-        pathname: `/categories/${category.category}`,
+        pathname: `/categories/${category.title}`,
         query: { category: JSON.stringify(category) },
       }}
       // style={{
@@ -21,7 +21,7 @@ const Category: FC<IProps> = ({ category }) => {
         font-bold hover:text-white hover:rounded-lg duration-300 hover:bg-pink-400
         transition-bg cursor-pointer p-10 rounded-md shadow-lg hover:shadow-xl flex justify-center
         items-center bg-blue-400 text-white">
-      {category.category}
+      {category.title}
     </Link>
   );
 };

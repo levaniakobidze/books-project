@@ -33,7 +33,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     content: "",
   });
   const [books, setBooks] = useState<IBook[]>([]);
-
+  const [categories, setCategories] = useState([]);
   const getAllBooks = async () => {
     try {
       const resp = await axios.get(
@@ -45,20 +45,21 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       console.log(error);
     }
   };
+  const getCategories = async () => {
+    try {
+      const resp = await axios.get(
+        "https://books-project-back-production.up.railway.app/api/allcategory"
+      );
+      setCategories(resp.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getAllBooks();
+    getCategories();
   }, []);
-
-  const [categories] = useState([
-    { category: "Beginner's English" },
-    { category: "Intermediate English" },
-    { category: "Advanced English" },
-    { category: "English Grammar" },
-    { category: "English Vocabulary" },
-    { category: "English Conversation" },
-    { category: "English Writing" },
-    { category: "English Reading Comprehension" },
-  ]);
 
   const handleBuyBook = () => {
     console.log(token, isAuth);
@@ -86,6 +87,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
         handleBuyBook,
         showLoginRegisterModal,
         setShowLoginRegisterModal,
+        getCategories,
       }}>
       {children}
     </BooksContext.Provider>

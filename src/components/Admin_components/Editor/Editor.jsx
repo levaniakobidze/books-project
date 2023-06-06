@@ -1,19 +1,20 @@
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useContext, useRef, useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { BooksContext } from "@/context/books";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import axios from "axios";
+import BookAdded from "@/components/Modals/BookAdded/BookAdded";
 
 const TextEditor = () => {
   const editorRef = useRef(null);
   const categoryRef = useRef(null);
-
+  const [selectedImg, setSelectedImg] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {
     bookContent,
     setBookContent,
-    bookTitle,
-    setBookTitle,
     pagetTitle,
     setPageTitle,
     pageContent,
@@ -35,8 +36,6 @@ const TextEditor = () => {
     editorRef.current.setContent("");
     setPageTitle("");
     window.scrollTo(0, 0);
-
-    console.log(bookContent);
   };
 
   const editHandler = () => {
@@ -49,7 +48,6 @@ const TextEditor = () => {
       content: newPageContent,
       audio: "",
     };
-
     setBookContent((prevBook) => ({
       ...prevBook,
       pages: updatedPages,
@@ -83,7 +81,7 @@ const TextEditor = () => {
       const reader = new FileReader();
       reader.onload = () => {
         const base64String = reader.result;
-        setBookContent((prev) => ({ ...prev, poster: base64String }));
+        setSelectedImg(base64String);
       };
 
       reader.readAsDataURL(file);
@@ -101,18 +99,63 @@ const TextEditor = () => {
     categoryRef.current.value = "";
   };
 
+  const handleSelectPoster = (e) => {
+    setBookContent((prev) => ({ ...prev, poster: e.target.files[0] }));
+    setSelectedImg(URL.createObjectURL(e.target.files[0]));
+  };
+
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.setContent(pageContent.content || "");
     }
   }, [pageContent]);
 
+  const formData = new FormData();
+  const arrayOfObjects = bookContent.pages;
+
+  formData.append("title", bookContent.title);
+  formData.append("poster", bookContent.poster);
+  formData.append("author", bookContent.author);
+  formData.append("description", bookContent.description);
+  formData.append("price", bookContent.price);
+  formData.append("categories", bookContent.categories);
+
+  for (let index = 0; index < bookContent.pages.length; index++) {
+    const element = bookContent.pages[index];
+    formData.append("pages[]", JSON.stringify(element));
+  }
+
   const upload = async () => {
+    setLoading(true);
     try {
-      await axios.post(
-        "https://books-project-back-production.up.railway.app/api/books",
-        bookContent
-      );
+      if (
+        bookContent.title &&
+        bookContent.author &&
+        bookContent.price &&
+        bookContent.poster &&
+        bookContent.description &&
+        bookContent.pages
+      ) {
+        await axios.post(
+          "https://books-project-back-production.up.railway.app/api/books",
+          formData
+        );
+      } else {
+        setLoading(false);
+        return;
+      }
+      setBookContent({
+        title: "",
+        poster: "",
+        author: "",
+        price: "",
+        description: "",
+        categories: [],
+        pages: [],
+      });
+      setSelectedImg("");
+      setLoading(false);
+      setShowModal(true);
     } catch (error) {
       console.log(error);
     }
@@ -120,6 +163,7 @@ const TextEditor = () => {
 
   return (
     <>
+      <BookAdded showModal={showModal} setShowModal={setShowModal} />
       <form className="mb-5">
         <div class="relative">
           <label
@@ -166,22 +210,23 @@ const TextEditor = () => {
             </label>
             <div
               class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...getRootProps()}>
+              // {...getRootProps()}
+            >
               <p className="text-gray-500  cursor-pointer">დაამატე</p>
               <input
-                {...getInputProps()}
+                // {...getInputProps()}
                 type="file"
                 id="default-search"
                 placeholder="შეიყვანეთ წიგნის სათაური"
-                value={bookTitle}
+                onChange={handleSelectPoster}
                 required
               />
             </div>
-            {bookContent.poster && (
+            {selectedImg && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 className="w-[100px] mt-5 "
-                src={bookContent.poster}
+                src={selectedImg}
                 alt="Selected"
               />
             )}
@@ -274,6 +319,7 @@ const TextEditor = () => {
           <textarea
             id="message"
             rows="4"
+            value={bookContent.description}
             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Write your thoughts here..."
             onChange={(e) =>
@@ -374,12 +420,12 @@ const TextEditor = () => {
         )}
 
         <button
-          // disabled={
-          //   !bookContent.title ||
-          //   !bookContent.description ||
-          //   !bookContent.price ||
-          //   !bookContent.author
-          // }
+          disabled={
+            !bookContent.title ||
+            !bookContent.description ||
+            !bookContent.price ||
+            !bookContent.author
+          }
           onClick={uploadHandler}
           type="button"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
@@ -392,10 +438,11 @@ const TextEditor = () => {
           გვერდის წაშლა
         </button>
         <button
+          disabled={loading}
           onClick={upload}
           type="button"
           className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-          ატვირთვა
+          ატვირთვა{loading && "..."}
         </button>
       </div>
     </>

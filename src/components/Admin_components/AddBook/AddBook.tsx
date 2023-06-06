@@ -6,7 +6,7 @@ const AddBook = () => {
     useContext(BooksContext);
   return (
     <Fragment>
-      <div className="flex">
+      <div className="flex flex-col md:flex-row ">
         <div className="w-[100px] mr-2 ">
           <ul className="">
             {bookContent.pages?.map((page: any, index: number) => {

@@ -1,11 +1,12 @@
 export interface IBook {
   id: string;
-  img: string;
   author: string;
   title: string;
   description: string;
-  price: string;
-  category: string;
+  price: number;
+  category: number[];
+  poster: string;
+  pages: object[];
 }
 
 export interface ICategory {

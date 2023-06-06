@@ -15,12 +15,10 @@ const Book: FC<IProps> = ({ book }) => {
       href={`/my_books/${book.id}`}
       className="rounded shadow-lg  outline outline-blue-100 max-h-[400px]">
       <div className="px-3">
-        <Image
+        <img
           className="w-full object-cover  h-[220px]"
-          src={book.img}
+          src={process.env.NEXT_PUBLIC_URL + book?.poster}
           alt="asda"
-          height={200}
-          width={200}
         />
       </div>
       <p className="hidden text-center mt-5  text-sm font-bold">

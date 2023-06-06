@@ -47,7 +47,7 @@ export default function Home() {
         </div>
 
         {/* //////////////////////////////// */}
-        {/* <SearchWord /> */}
+        <SearchWord />
         {/* ///////////////////////////// */}
         <Footer />
       </div>

@@ -21,6 +21,8 @@ import { GiProgression } from "react-icons/gi";
 import AddBook from "@/components/Admin_components/AddBook/AddBook";
 import BooksList from "@/components/BooksList/BooksList";
 import Categories from "../../components/Admin_components/Categories/Categories";
+import Users from "@/components/Admin_components/Users/Users";
+import Books from "@/components/Admin_components/Books/Books";
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -71,7 +73,9 @@ const Index: FC = () => {
       case "admin_categories":
         return <Categories />;
       case "admin_books":
-        return <BooksList />;
+        return <Books />;
+      case "admin_users":
+        return <Users />;
       default:
         break;
     }

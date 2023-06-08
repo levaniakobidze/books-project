@@ -5,6 +5,8 @@ import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import axios from "axios";
 import BookAdded from "@/components/Modals/BookAdded/BookAdded";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 
 const TextEditor = () => {
   const editorRef = useRef(null);
@@ -12,6 +14,7 @@ const TextEditor = () => {
   const [selectedImg, setSelectedImg] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const animatedComponents = makeAnimated();
   const {
     bookContent,
     setBookContent,
@@ -19,6 +22,7 @@ const TextEditor = () => {
     setPageTitle,
     pageContent,
     setPageContent,
+    categories,
   } = useContext(BooksContext);
   const log = () => {
     if (editorRef.current) {
@@ -161,6 +165,33 @@ const TextEditor = () => {
     }
   };
 
+  const colourOptions =
+    categories &&
+    categories.map((category, index) => {
+      return {
+        value: category.id,
+        label: category.title,
+        color: "#00B8D9",
+        isFixed: true,
+      };
+    });
+
+  const customStyles = {
+    control: (provided) => ({
+      ...provided,
+      zIndex: 999,
+    }),
+  };
+
+  const handleSelect = (selected) => {
+    const categories = selected.map((category) => category.value);
+    setBookContent((prev) => ({
+      ...prev,
+      categories: [...categories],
+    }));
+  };
+  console.log(bookContent.categories);
+
   return (
     <>
       <BookAdded showModal={showModal} setShowModal={setShowModal} />
@@ -201,6 +232,38 @@ const TextEditor = () => {
             required
           />
         </div>
+        <div class="relative mt-5">
+          <label
+            for="message"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            წიგნის კატეგორიები
+          </label>
+          {/* <div className="gap-2 flex justify-between w-full p-4 pl-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <input
+              type="text"
+              id="default-search"
+              className="border-0 outline-0"
+              placeholder="შეიყვანეთ წიგნის სათაური"
+              ref={categoryRef}
+              required
+            />
+            <button
+              onClick={addCategory}
+              type="button"
+              className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1 mr-2  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+              დამატება
+            </button>
+          </div> */}
+          <Select
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            defaultValue={[colourOptions[4], colourOptions[5]]}
+            isMulti
+            options={colourOptions}
+            styles={customStyles}
+            onChange={handleSelect}
+          />
+        </div>
         <div className="flex gap-5">
           <div class="relative mt-5">
             <label
@@ -209,10 +272,9 @@ const TextEditor = () => {
               წიგნის პოსტერი
             </label>
             <div
-              class="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               // {...getRootProps()}
             >
-              <p className="text-gray-500  cursor-pointer">დაამატე</p>
               <input
                 // {...getInputProps()}
                 type="file"
@@ -253,63 +315,7 @@ const TextEditor = () => {
             />
           </div>
         </div>
-        <div class="relative mt-5">
-          <label
-            for="message"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            წიგნის კატეგორიები
-          </label>
-          <div className="gap-2 flex justify-between w-full p-4 pl-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <input
-              type="text"
-              id="default-search"
-              className="border-0 outline-0"
-              placeholder="შეიყვანეთ წიგნის სათაური"
-              ref={categoryRef}
-              required
-            />
-            <button
-              onClick={addCategory}
-              type="button"
-              className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1 mr-2  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-              დამატება
-            </button>
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-3 mt-5">
-          {bookContent.categories?.map((category, index) => {
-            return (
-              <div
-                onClick={() => {
-                  let categories = [...bookContent.categories];
-                  categories = categories.filter(
-                    (category, catIndex) => catIndex !== index
-                  );
-                  setBookContent((prev) => ({
-                    ...prev,
-                    categories: categories,
-                  }));
-                }}
-                key={index}
-                className="flex items-center bg-blue-500 text-white rounded-full px-3 py-1">
-                <span className="mr-2">{category}</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 cursor-pointer"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </div>
-            );
-          })}
-        </div>
+
         <div className="mt-5">
           <label
             for="message"

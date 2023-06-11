@@ -16,7 +16,7 @@ function classNames(...classes: any) {
 }
 
 const Filters = () => {
-  const { categories } = useContext(BooksContext);
+  const { categories, books } = useContext(BooksContext);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const sortOptions = [
@@ -26,30 +26,29 @@ const Filters = () => {
     { name: "Price: Low to High", href: "#", current: false },
     { name: "Price: High to Low", href: "#", current: false },
   ];
-  const subCategories = [
-    { name: "Totes", href: "#" },
-    { name: "Backpacks", href: "#" },
-    { name: "Travel Bags", href: "#" },
-    { name: "Hip Bags", href: "#" },
-    { name: "Laptop Sleeves", href: "#" },
-  ];
+
+  const cat =
+    categories &&
+    categories.map((category: any, index: number) => {
+      return { value: category.id, label: category.title, checked: false };
+    });
+
+  const price =
+    books &&
+    books.map((book: any, index: number) => {
+      return { value: book.price, label: book.price, checked: false };
+    });
+
   const filters = [
     {
       id: "category",
       name: "კატეგორია",
-      options: [...categories],
+      options: [...cat],
     },
     {
       id: "price",
       name: "ფასი",
-      options: [
-        { value: "2l", label: "2L", checked: false },
-        { value: "6l", label: "6L", checked: false },
-        { value: "12l", label: "12L", checked: false },
-        { value: "18l", label: "18L", checked: false },
-        { value: "20l", label: "20L", checked: false },
-        { value: "40l", label: "40L", checked: true },
-      ],
+      options: [...price],
     },
   ];
   return (
@@ -263,8 +262,8 @@ const Filters = () => {
                                   className="flex items-center">
                                   <input
                                     id={`filter-${section.id}-${optionIdx}`}
-                                    name={option.category}
-                                    defaultValue={option.category}
+                                    name={`${section.id}[]`}
+                                    defaultValue={option.value}
                                     type="checkbox"
                                     defaultChecked={option.checked}
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
@@ -272,7 +271,7 @@ const Filters = () => {
                                   <label
                                     htmlFor={`filter-${section.id}-${optionIdx}`}
                                     className="ml-3 text-sm text-white">
-                                    {option.category}
+                                    {option.label}
                                   </label>
                                 </div>
                               ))}

@@ -50,6 +50,11 @@ const Users = () => {
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Verified
                   </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                    ID
+                  </th>
 
                   <th
                     scope="col"
@@ -70,6 +75,9 @@ const Users = () => {
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {user.verify.toString()}
+                      </td>{" "}
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <input type="text" value={user.id} />
                       </td>
                     </tr>
                   ))}

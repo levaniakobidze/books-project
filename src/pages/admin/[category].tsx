@@ -58,12 +58,6 @@ const Index: FC = () => {
       icon: AiOutlineHome,
       current: false,
     },
-    {
-      name: "სტატისტიკა",
-      href: "/admin/admin_statistics",
-      icon: AiOutlineHome,
-      current: false,
-    },
   ];
 
   const renderComponent = () => {

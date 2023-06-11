@@ -6,6 +6,7 @@ import axios from "axios";
 
 interface BooksContextType {
   books: IBook[];
+  dispplayBook: IBook[];
 }
 
 export const BooksContext = createContext<BooksContextType | any>(null);
@@ -33,14 +34,15 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     content: "",
   });
   const [books, setBooks] = useState<IBook[]>([]);
+  const [displayBooks, setDisplayBooks] = useState<IBook[]>([]);
   const [categories, setCategories] = useState([]);
   const getAllBooks = async () => {
     try {
       const resp = await axios.get(
         "https://books-project-back-production.up.railway.app/api/allbook"
       );
-      console.log(resp.data);
       setBooks(resp.data);
+      setDisplayBooks(resp.data);
     } catch (error) {
       console.log(error);
     }
@@ -75,6 +77,8 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     <BooksContext.Provider
       value={{
         books,
+        displayBooks,
+        setDisplayBooks,
         bookContent,
         setBookContent,
         categories,

@@ -17,7 +17,9 @@ function Category() {
     if (storageCategory == undefined) {
       localStorage.setItem("category", category);
     }
-    const filtered = books.filter((book: IBook) => book.category === category);
+    const filtered = books.filter((book: IBook) =>
+      book.categories.includes(Number(category))
+    );
     setFilteredBooks(filtered);
   }, []);
 

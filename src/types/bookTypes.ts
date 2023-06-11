@@ -4,7 +4,7 @@ export interface IBook {
   title: string;
   description: string;
   price: number;
-  category: number[];
+  categories: number[];
   poster: string;
   pages: object[];
 }

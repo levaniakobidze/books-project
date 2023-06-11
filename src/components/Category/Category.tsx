@@ -8,10 +8,9 @@ interface IProps {
 const Category: FC<IProps> = ({ category }) => {
   return (
     <Link
-      onClick={() => localStorage.setItem("category", category.title)}
+      onClick={() => localStorage.setItem("category", category.id.toString())}
       href={{
-        pathname: `/categories/${category.title}`,
-        query: { category: JSON.stringify(category) },
+        pathname: `/categories/${category.id}`,
       }}
       // style={{
       //   backgroundImage:

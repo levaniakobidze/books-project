@@ -23,7 +23,8 @@
     "**/*.ts",
     "**/*.tsx",
     "src/middleware.tse.ts",
-    "src/components/Admin_components/Editor/Editor.jsx"
+    "src/components/Admin_components/Editor/Editor.jsx",
+    "src/pages/open_book/[id].js"
   ],
   "exclude": ["node_modules"]
 }

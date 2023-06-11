@@ -5,14 +5,14 @@ import { BooksContext } from "@/context/books";
 import Navigation from "@/components/Navigation/Navigation";
 
 const Open_book = () => {
-  const router: NextRouter = useRouter();
+  const router = useRouter();
   const { id } = router.query;
-  const [book, setBook] = useState<IBook | null>(null);
+  const [book, setBook] = useState(null);
   const { books, handleBuyBook } = useContext(BooksContext);
   const [selectedBookIndex, setSelectedBookIndex] = useState(0);
 
   useEffect(() => {
-    const filtered = books.find((book: IBook) => book.id === id);
+    const filtered = books.find((book) => book.id === id);
     setBook(filtered);
   }, [id]);
 
@@ -24,7 +24,7 @@ const Open_book = () => {
           <ul className="p-10 gap-10 fixed">
             <h1 className="text-lg">{book?.title}</h1>
             <p className="text-sm">ავტორი: {book?.author}</p>
-            {book?.pages?.map((page: any, index) => {
+            {book?.pages?.map((page, index) => {
               return (
                 <li
                   onClick={() => {
@@ -41,12 +41,14 @@ const Open_book = () => {
             })}
           </ul>
         </div>
-        <div
-          className="p-10 w-100 mx-0-auto book disabledCopy"
-          onContextMenu={(e) => e.preventDefault()}
-          dangerouslySetInnerHTML={{
-            __html: book?.pages[selectedBookIndex].content,
-          }}></div>
+        {book && (
+          <div
+            className="p-10 w-100 mx-0-auto book disabledCopy"
+            onContextMenu={(e) => e.preventDefault()}
+            dangerouslySetInnerHTML={{
+              __html: book?.pages[selectedBookIndex].content,
+            }}></div>
+        )}
       </div>
     </Fragment>
   );

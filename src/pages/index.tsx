@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <Fragment>
       <Navigation />
-      <div className="max:w-lg  w-full min:h-screen flex flex-col bg-gradient-to-r to-tl from-[#c7d8e8] to-[#fde6e7]">
+      <div className="max:w-lg  w-full min:h-screen flex flex-col ">
         <VideoSlider />
         {categories.length >= 4 && (
           <div>
@@ -45,7 +45,6 @@ export default function Home() {
               })}
           </div>
         </div>
-
         {/* //////////////////////////////// */}
         <SearchWord />
         {/* ///////////////////////////// */}

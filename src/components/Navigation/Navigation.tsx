@@ -20,6 +20,8 @@ import InfoIcon from "@mui/icons-material/Info";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import Logo from "../../../public/assets/logo.png";
+import Image from "next/image";
 
 function Navigation() {
   const [showMenu, setShowMenu] = useState(false);
@@ -80,7 +82,15 @@ function Navigation() {
     <div>
       <nav className="  px-10 flex items-center justify-between z-[100]">
         <div className="font-bold text-3xl text-gray-400 cursor-pointer">
-          Logo
+          <Link href="/">
+            <Image
+              className="h-[40px] w-[150px]"
+              src={Logo}
+              alt="logo"
+              width={100}
+              height={100}
+            />
+          </Link>
         </div>
         <div className="  lg:hidden py-5">
           <MenuIcon

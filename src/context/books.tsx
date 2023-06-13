@@ -3,6 +3,7 @@ import { IBook } from "@/types/bookTypes";
 import { useContext } from "react";
 import { AuthContext } from "./auth";
 import axios from "axios";
+import { userAgent } from "next/server";
 
 interface BooksContextType {
   books: IBook[];
@@ -36,6 +37,12 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   const [books, setBooks] = useState<IBook[]>([]);
   const [displayBooks, setDisplayBooks] = useState<IBook[]>([]);
   const [categories, setCategories] = useState([]);
+  const [showBuyBookModal, setShowBuyBookModal] = useState(false);
+  const [purchase, setPurchase] = useState({
+    cardName: "",
+    userId: "",
+    bookId: "",
+  });
   const getAllBooks = async () => {
     try {
       const resp = await axios.get(
@@ -63,19 +70,30 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     getCategories();
   }, []);
 
-  const handleBuyBook = () => {
-    console.log(token, isAuth);
+  const handleBuyBook = (book: IBook) => {
+    let findBook;
+    if (book && Object.keys(user).length !== 0) {
+      findBook = user.history.find((b: any) => b.bookId === book.id);
+    }
     if (!token || !isAuth) {
       setShowLoginRegisterModal(true);
       return;
+    } else if (!findBook) {
+      setShowBuyBookModal(true);
+      setPurchase({ ...purchase, userId: user.id, bookId: book.id });
     } else {
       setShowLoginRegisterModal(false);
     }
+    console.log(user.id);
   };
 
   return (
     <BooksContext.Provider
       value={{
+        setShowBuyBookModal,
+        purchase,
+        setPurchase,
+        showBuyBookModal,
         books,
         displayBooks,
         setDisplayBooks,

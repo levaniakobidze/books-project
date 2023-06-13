@@ -9,6 +9,7 @@ import { StarIcon } from "@heroicons/react/20/solid";
 import { Tab } from "@headlessui/react";
 import Link from "next/link";
 import { AuthContext } from "@/context/auth";
+import BuyBooks from "@/components/Modals/BuyBook/BuyBook";
 
 const product = {
   name: "Application UI Icon Pack",
@@ -62,7 +63,7 @@ const Description = () => {
   const { id } = router.query;
   const [book, setBook] = useState<IBook | null>(null);
   const { books, handleBuyBook } = useContext(BooksContext);
-  const { isAuth } = useContext(AuthContext);
+  const { isAuth, user } = useContext(AuthContext);
 
   useEffect(() => {
     const filtered = books.find((book: IBook) => book.id === id);
@@ -72,9 +73,13 @@ const Description = () => {
   function classNames(...classes: any) {
     return classes.filter(Boolean).join(" ");
   }
-
+  let findBook;
+  if (book && Object.keys(user).length !== 0) {
+    findBook = user.history.find((b: any) => b.bookId === book.id);
+  }
   return (
     <Fragment>
+      <BuyBooks />
       <Navigation />
       <div className="bg-white">
         <div className="mx-auto px-4 py-16 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">
@@ -120,17 +125,21 @@ const Description = () => {
               </div>
               <p className="mt-6 text-gray-500">{book?.description}</p>
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
-                {/* <button
-                  onClick={handleBuyBook}
-                  type="button"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-400 px-8 py-3 text-base font-medium text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
-                  ყიდვა {book?.price}ლ
-                </button> */}
-                <Link
-                  href={`/open_book/${book?.id}`}
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-400 px-8 py-3 text-base font-medium text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
-                  ნახვა
-                </Link>
+                {!findBook ? (
+                  <button
+                    onClick={() => handleBuyBook(book)}
+                    type="button"
+                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-400 px-8 py-3 text-base font-medium text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                    ყიდვა {book?.price}ლ
+                  </button>
+                ) : (
+                  <Link
+                    href={`/open_book/${book?.id}`}
+                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-400 px-8 py-3 text-base font-medium text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                    ნახვა
+                  </Link>
+                )}
+
                 <Link
                   href={isAuth ? "/books" : "/"}
                   type="button"

@@ -23,6 +23,7 @@ import BooksList from "@/components/BooksList/BooksList";
 import Categories from "../../components/Admin_components/Categories/Categories";
 import Users from "@/components/Admin_components/Users/Users";
 import Books from "@/components/Admin_components/Books/Books";
+import Logo from "../../../public/assets/logo.png";
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -131,7 +132,15 @@ const Index: FC = () => {
                       src={Bi}
                       alt="Your Company"
                     /> */}
-                    Logo
+                    <Link href="/">
+                      <Image
+                        className="h-[40px] w-[150px]"
+                        src={Logo}
+                        alt="logo"
+                        width={100}
+                        height={100}
+                      />
+                    </Link>
                   </div>
                   <div className="mt-5 h-0 flex-1 overflow-y-auto">
                     <nav className="space-y-1 px-2">
@@ -181,7 +190,15 @@ const Index: FC = () => {
                 src={BitLogo}
                 alt="Your Company"
               /> */}
-              sadasd
+              <Link href="/">
+                <Image
+                  className="h-[40px] w-[150px]"
+                  src={Logo}
+                  alt="logo"
+                  width={100}
+                  height={100}
+                />
+              </Link>
             </div>
             <div className="flex flex-1 flex-col overflow-y-auto">
               <nav className="flex-1 space-y-1 px-2 py-4">

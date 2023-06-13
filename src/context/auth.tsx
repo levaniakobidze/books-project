@@ -70,6 +70,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     axios
       .post(loginUrl, credentials)
       .then((resp) => {
+        console.log(resp.data);
         setUser(resp.data);
         setToken(resp.data.token);
         localStorage.setItem("token", resp.data.token);

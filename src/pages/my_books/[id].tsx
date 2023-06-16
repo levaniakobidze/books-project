@@ -62,7 +62,7 @@ const Description = () => {
   const router: NextRouter = useRouter();
   const { id } = router.query;
   const [book, setBook] = useState<IBook | null>(null);
-  const { books, handleBuyBook } = useContext(BooksContext);
+  const { books, handleBuyBook, purchaseHistory } = useContext(BooksContext);
   const { isAuth, user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -74,9 +74,12 @@ const Description = () => {
     return classes.filter(Boolean).join(" ");
   }
   let findBook;
+  let findAccessId;
   if (book && Object.keys(user).length !== 0) {
-    findBook = user.history.find((b: any) => b.bookId === book.id);
+    findBook = purchaseHistory.find((b: any) => b.bookId === book.id);
+    findAccessId = book?.access.find((accId) => accId === user.id);
   }
+
   return (
     <Fragment>
       <BuyBooks />
@@ -89,9 +92,9 @@ const Description = () => {
             <div className="lg:col-span-4 lg:row-end-1">
               <div className="aspect-h-3 aspect-w-3 overflow-hidden  rounded-lg bg-blue-100">
                 <img
-                  src={process.env.NEXT_PUBLIC_URL ?? "/" + book?.poster}
-                  alt={product.imageAlt}
                   className="object-contain object-center w-full h-[450px]"
+                  src={process.env.NEXT_PUBLIC_URL + book?.poster!}
+                  alt="asda"
                 />
               </div>
             </div>
@@ -125,25 +128,32 @@ const Description = () => {
               </div>
               <p className="mt-6 text-gray-500">{book?.description}</p>
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
-                {!findBook ? (
+                {!findBook && !findAccessId && (
                   <button
                     onClick={() => handleBuyBook(book)}
                     type="button"
-                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-400 px-8 py-3 text-base font-medium text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                    className="flex w-full items-center font-bold justify-center rounded-md border border-transparent bg-blue-400 px-8 py-3 text-base  text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
                     ყიდვა {book?.price}ლ
                   </button>
-                ) : (
+                )}
+
+                {findAccessId && (
                   <Link
                     href={`/open_book/${book?.id}`}
-                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-400 px-8 py-3 text-base font-medium text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                    className="flex w-full items-center font-bold justify-center rounded-md border border-transparent bg-green-400 px-8 py-3 text-base text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
                     ნახვა
                   </Link>
+                )}
+                {findBook && !findAccessId && (
+                  <div className="flex w-full  items-center justify-center rounded-md border border-transparent bg-pink-400 cursor-pointer px-8 py-3 text-sm  font-bold text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                    დაელოდეთ წვდომას
+                  </div>
                 )}
 
                 <Link
                   href={isAuth ? "/books" : "/"}
                   type="button"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-50 px-8 py-3 text-base font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                  className="flex w-full items-center font-bold justify-center rounded-md border border-transparent bg-indigo-50 px-8 py-3 text-base  text-pink-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
                   უკან დაბრუნება
                 </Link>
               </div>

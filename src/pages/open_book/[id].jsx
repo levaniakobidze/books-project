@@ -14,14 +14,14 @@ const Open_book = () => {
   useEffect(() => {
     const filtered = books.find((book) => book.id === id);
     setBook(filtered);
-  }, [id]);
+  }, [id, books]);
 
   return (
     <Fragment>
       <Navigation />
-      <div className="flex">
-        <div className="max-w-[800px] min-w-[400px] bg-blue-400 min-h-screen">
-          <ul className="p-10 gap-10 fixed">
+      <div className="flex flex-col md:flex-row ">
+        <div className=" w-full md:max-w-[300px]    bg-blue-400 ">
+          <ul className="p-3 md:p-10  gap-10 static md:fixed">
             <h1 className="text-lg">{book?.title}</h1>
             <p className="text-sm">ავტორი: {book?.author}</p>
             {book?.pages?.map((page, index) => {
@@ -43,7 +43,7 @@ const Open_book = () => {
         </div>
         {book && (
           <div
-            className="p-10 w-100 mx-0-auto book disabledCopy"
+            className="p-3 md:p-10 w-100 mx-0-auto book disabledCopy overflow-y-scroll h-screen w-full"
             onContextMenu={(e) => e.preventDefault()}
             dangerouslySetInnerHTML={{
               __html: book?.pages[selectedBookIndex].content,

@@ -80,7 +80,7 @@ function Footer() {
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div className="mx-auto max-w-7xl px-6 pb-8  ">
+      <div className="mx-auto max-w-7xl px-6 pb-8   ">
         {/* <div className=" border-t border-gray-900/10 pt-8  mt-5 lg:flex lg:items-center lg:justify-between">
           <div>
             <h3 className="text-sm font-semibold leading-6 text-gray-900">
@@ -141,7 +141,7 @@ function Footer() {
           </form>
         </div> */}
         <div className="mt-8 border-t border-gray-900/10 pt-8 md:flex md:items-center md:justify-between">
-          <div className="flex space-x-6 md:order-2">
+          <div className="flex space-x-6 md:order-2 justify-center">
             {navigation.social.map((item) => (
               <a
                 key={item.name}
@@ -152,7 +152,7 @@ function Footer() {
               </a>
             ))}
           </div>
-          <p className="mt-8 text-xs leading-5 text-gray-500 md:order-1 md:mt-0">
+          <p className="mt-8 text-xs leading-5 text-gray-500 md:order-1 md:mt-0 text-center">
             &copy; 2020 Your Company, Inc. All rights reserved.
           </p>
         </div>

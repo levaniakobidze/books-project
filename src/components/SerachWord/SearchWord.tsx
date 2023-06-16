@@ -23,7 +23,7 @@ function SearchWor() {
           name="oldform"
           id="oldform"
           className="w-full">
-          <div className="max-w-md mx-3 sm:mx-auto mt-5  flex  justify-between items-center w-[100%] bg-white rounded-lg p-3 shadow-gray-400 shadow-sm">
+          <div className="max-w-md mx-3 sm:mx-auto mt-5  flex flex-col md:flex-row  justify-between items-center  bg-white rounded-lg p-3 shadow-gray-400 shadow-sm">
             <input
               type="text"
               name="q"

@@ -4,10 +4,26 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 import { AuthContext } from "@/context/auth";
 import Link from "next/link";
 import { BooksContext } from "@/context/books";
+import axios from "axios";
 
 const BuyBooks = () => {
   const { showBuyBookModal, setShowBuyBookModal, purchase, setPurchase } =
     useContext(BooksContext);
+  const [loading, setLoading] = useState(false);
+  const handlePurcahes = async () => {
+    setLoading(true);
+    try {
+      await axios.post(process.env.NEXT_PUBLIC_URL + "/api/purchase", purchase);
+      setLoading(false);
+      setTimeout(() => {
+        setShowBuyBookModal(false);
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
   return (
     <Transition.Root show={showBuyBookModal} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setShowBuyBookModal}>
@@ -68,8 +84,10 @@ const BuyBooks = () => {
                         className="mt-3 max-w-sm mx-auto bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       />
                     </div>
-                    <button className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 border border-pink-700 rounded">
-                      გადავიხადე
+                    <button
+                      onClick={handlePurcahes}
+                      className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 border border-pink-700 rounded">
+                      გადავიხადე {loading && "..."}
                     </button>
                   </div>
                 </div>

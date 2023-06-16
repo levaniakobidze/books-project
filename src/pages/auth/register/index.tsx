@@ -44,8 +44,6 @@ function Register() {
       return;
     } else {
       setErrors({ ...errors, userName: "" });
-
-      console.log("sadad");
     }
     if (!emailRegex.test(registerData.email)) {
       setErrors({ ...errors, email: "მიუთითეთ სწორი ემაილი" });

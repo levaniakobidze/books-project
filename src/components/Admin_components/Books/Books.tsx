@@ -3,11 +3,14 @@ import axios from "axios";
 import { title } from "process";
 import Link from "next/link";
 import { BooksContext } from "@/context/books";
+import { AuthContext } from "@/context/auth";
 const Books = () => {
   const [books, setBooks] = useState<any>([]);
   const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false);
   const { setBookContent } = useContext(BooksContext);
+  const { user } = useContext(AuthContext);
+
   const getBooks = async () => {
     try {
       const resp = await axios.get(
@@ -24,16 +27,21 @@ const Books = () => {
   }, []);
 
   const giveAccess = async (book: any) => {
-    const updatedBook = {
-      ...book,
-      access: [...book.access, userId],
+    setLoading(true);
+    const access = {
+      bookId: book.id,
+      userId: userId,
     };
     try {
       await axios.put(
-        `https://books-project-back-production.up.railway.app/api/books/${book.id}`,
-        updatedBook
+        `https://books-project-back-production.up.railway.app/api/access/${book.id}/${userId}`,
+        access
       );
-    } catch (error) {}
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
   };
 
   const deleteBook = async (id: string) => {
@@ -89,6 +97,7 @@ const Books = () => {
                     onChange={(e) => setUserId(e.target.value)}
                   />
                   <button
+                    disabled={loading && !Boolean(userId)}
                     onClick={() => giveAccess(book)}
                     className=" bg-green-500 mx-auto hover:bg-green-700 text-white font-bold py-1 px-2 text-sm rounded">
                     დამატება

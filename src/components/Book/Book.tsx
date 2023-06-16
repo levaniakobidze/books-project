@@ -11,12 +11,14 @@ interface IProps {
 }
 
 const Book: FC<IProps> = ({ book }) => {
-  const { handleBuyBook, showBuyBookModal, setShowBuyBookModal } =
-    useContext(BooksContext);
+  const { handleBuyBook, purchaseHistory } = useContext(BooksContext);
   const { user } = useContext(AuthContext);
+
   let findBook;
+  let findAccessId;
   if (book && Object.keys(user).length !== 0) {
-    findBook = user.history.find((b: any) => b.bookId === book.id);
+    findBook = purchaseHistory.find((b: any) => b.bookId === book.id);
+    findAccessId = book?.access.find((accId) => accId === user.id);
   }
 
   return (
@@ -46,7 +48,7 @@ const Book: FC<IProps> = ({ book }) => {
             </p>
           </div>
           {/* <p className="text-[13px]">Levan masadashvili</p> */}
-          {!findBook ? (
+          {/* {!findBook ? (
             <button
               onClick={(e) => {
                 // e.stopPropagation();
@@ -61,6 +63,25 @@ const Book: FC<IProps> = ({ book }) => {
               className="  rounded-sm  tracking-wider px-3 py-1 text-sm rounded-tl-lg rounded-bl-lg sm:px-5 hover:bg-transparent transition duration-350 hover:outline hover:text-[#6ca0d1]  font-bold hover:outline-[#6ca0d1] bg-green-400   text-bold text-white">
               ნახვა
             </Link>
+          )} */}
+          {!findBook && !findAccessId && (
+            <button
+              onClick={() => handleBuyBook(book)}
+              className=" bg-blue-400 text-white text-sm font-bold  rounded-tl-lg rounded-bl-lg px-3 py-1  sm:mt-0 md:shadow-xl  sm:flex flex-col justify-center items-center">
+              ყიდვა
+            </button>
+          )}
+          {findAccessId && (
+            <Link
+              href={`/open_book/${book?.id}`}
+              className=" bg-green-400 text-white text-sm font-bold  rounded-tl-lg rounded-bl-lg px-3 py-1  sm:mt-0 md:shadow-xl  sm:flex flex-col justify-center items-center">
+              ნახვა
+            </Link>
+          )}
+          {findBook && !findAccessId && (
+            <div className=" bg-pink-400 text-white text-sm font-bold rounded-tl-lg rounded-bl-lg px-3 py-1  sm:mt-0 md:shadow-xl  sm:flex flex-col justify-center items-center">
+              დაელოდეთ
+            </div>
           )}
         </div>
         <p className=" hidden sm:flex mb-3   px-5 text-center mt-5 text-მდ text-gray-500 ">

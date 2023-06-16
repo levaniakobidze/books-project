@@ -7,6 +7,7 @@ export interface IBook {
   categories: number[];
   poster: string;
   pages: object[];
+  access: string[];
 }
 
 export interface ICategory {

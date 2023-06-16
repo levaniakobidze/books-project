@@ -190,7 +190,6 @@ const TextEditor = () => {
       categories: [...categories],
     }));
   };
-  console.log(bookContent.categories);
 
   return (
     <>
@@ -343,7 +342,8 @@ const TextEditor = () => {
         initialValue=""
         init={{
           height: 500,
-          menubar: false,
+          menubar: "favs file edit  view insert format tools table",
+
           plugins: [
             "advlist",
             "autolink",

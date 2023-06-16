@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "./auth";
 import axios from "axios";
 import { userAgent } from "next/server";
+import { useRouter } from "next/router";
 
 interface BooksContextType {
   books: IBook[];
@@ -38,6 +39,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   const [displayBooks, setDisplayBooks] = useState<IBook[]>([]);
   const [categories, setCategories] = useState([]);
   const [showBuyBookModal, setShowBuyBookModal] = useState(false);
+  const [purchaseHistory, setPurchaseHistory] = useState([]);
   const [purchase, setPurchase] = useState({
     cardName: "",
     userId: "",
@@ -65,6 +67,20 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     }
   };
 
+  const getPurchaseHistory = async () => {
+    try {
+      const resp = await axios.get(
+        process.env.NEXT_PUBLIC_URL + "/api/alluser"
+      );
+      const userData = resp.data.find((u: any) => u.id === user.id);
+      setPurchaseHistory(userData.history);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getPurchaseHistory();
+  }, [user]);
+
   useEffect(() => {
     getAllBooks();
     getCategories();
@@ -84,13 +100,13 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     } else {
       setShowLoginRegisterModal(false);
     }
-    console.log(user.id);
   };
 
   return (
     <BooksContext.Provider
       value={{
         setShowBuyBookModal,
+        purchaseHistory,
         purchase,
         setPurchase,
         showBuyBookModal,
@@ -110,6 +126,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
         showLoginRegisterModal,
         setShowLoginRegisterModal,
         getCategories,
+        getAllBooks,
       }}>
       {children}
     </BooksContext.Provider>

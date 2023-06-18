@@ -64,3 +64,40 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
+
+/* In your CSS file or styled component */
+
+.loading-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #000;
+  z-index: 9999;
+}
+
+.loading-line-progress {
+  height: 100%;
+  width: 0;
+  background-color: #00ff00; /* Adjust color as desired */
+  transition: width 0.3s ease-in-out;
+}
+.progress {
+  width: 10%;
+  height: 5px;
+  background-color: #e907de;
+  animation: progres 1s forwards;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@keyframes progres {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 80%;
+  }
+}

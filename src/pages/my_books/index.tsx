@@ -7,10 +7,12 @@ import { BooksContext } from "@/context/books";
 import { IBook } from "@/types/bookTypes";
 import Link from "next/link";
 import AdminBook from "@/components/Admin_components/AdminBook/AdminBook";
+import PurchaseSuccess from "@/components/Modals/PurchaseSuccess/PurchaseSuccess";
 
 const MyBooks = () => {
   const { isAuth, user } = useContext(AuthContext);
-  const { books, purchaseHistory, getAllBooks } = useContext(BooksContext);
+  const { books, purchaseHistory, getAllBooks, getPurchaseHistory } =
+    useContext(BooksContext);
 
   const [myBooks, setMyBooks] = useState([]);
   const router = useRouter();
@@ -25,19 +27,32 @@ const MyBooks = () => {
   }, [purchaseHistory]);
 
   useEffect(() => {
-    getAllBooks();
+    getPurchaseHistory();
   }, [router.pathname]);
+
+  console.log(purchaseHistory);
 
   return (
     <Fragment>
       <Navigation />
+      <PurchaseSuccess />
       <div
-        className=" px-5 mx-auto min-h-screen  grid max-w-2xl grid-cols-2 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4 lg:gap-8
+        className="
           bg-gradient-to-r to-tl from-[#c7d8e8] to-[#fde6e7]">
-        {myBooks &&
-          myBooks.map((book: IBook, index) => {
-            return <AdminBook key={index} book={book} />;
-          })}
+        {myBooks.length > 0 && (
+          <div className=" w-[100%] px-5 mx-auto min-h-screen  grid max-w-2xl grid-cols-2 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4 lg:gap-8">
+            {myBooks &&
+              myBooks.map((book: IBook, index) => {
+                return <AdminBook key={index} book={book} />;
+              })}
+          </div>
+        )}
+
+        {myBooks.length < 1 && (
+          <div className="w-[100%] min-h-screen   flex justify-center items-center">
+            <p className="text-gray-500 text-3xl">,ჩემი წიგნები, - ცარიელია</p>
+          </div>
+        )}
       </div>
     </Fragment>
   );

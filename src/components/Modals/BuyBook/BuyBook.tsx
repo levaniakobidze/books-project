@@ -5,19 +5,28 @@ import { AuthContext } from "@/context/auth";
 import Link from "next/link";
 import { BooksContext } from "@/context/books";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const BuyBooks = () => {
-  const { showBuyBookModal, setShowBuyBookModal, purchase, setPurchase } =
-    useContext(BooksContext);
+  const {
+    showBuyBookModal,
+    setShowBuyBookModal,
+    purchase,
+    setPurchase,
+    setShowPurchaseSuccessModal,
+  } = useContext(BooksContext);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const handlePurcahes = async () => {
     setLoading(true);
     try {
       await axios.post(process.env.NEXT_PUBLIC_URL + "/api/purchase", purchase);
       setLoading(false);
-      setTimeout(() => {
-        setShowBuyBookModal(false);
-      }, 2000);
+      router.push("/my_books");
+      // setTimeout(() => {
+      setShowBuyBookModal(false);
+      setShowPurchaseSuccessModal(true);
+      // }, 2000);
     } catch (error) {
       console.log(error);
       setLoading(false);

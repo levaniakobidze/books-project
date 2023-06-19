@@ -8,10 +8,11 @@ import { IBook } from "@/types/bookTypes";
 import Link from "next/link";
 import AdminBook from "@/components/Admin_components/AdminBook/AdminBook";
 import PurchaseSuccess from "@/components/Modals/PurchaseSuccess/PurchaseSuccess";
+import AccessWaiting from "@/components/Modals/AccessWaiting/AccessWaiting";
 
 const MyBooks = () => {
   const { isAuth, user } = useContext(AuthContext);
-  const { books, purchaseHistory, getAllBooks, getPurchaseHistory } =
+  const { books, purchaseHistory, getPurchaseHistory } =
     useContext(BooksContext);
 
   const [myBooks, setMyBooks] = useState([]);
@@ -21,9 +22,6 @@ const MyBooks = () => {
       return purchaseHistory.some((obj2: any) => obj2.bookId === book.id);
     });
     setMyBooks(filteredBooks);
-    // if (!isAuth) {
-    //   router.push("/auth/login");
-    // }
   }, [purchaseHistory]);
 
   useEffect(() => {
@@ -36,6 +34,7 @@ const MyBooks = () => {
     <Fragment>
       <Navigation />
       <PurchaseSuccess />
+      <AccessWaiting />
       <div
         className="
           bg-gradient-to-r to-tl from-[#c7d8e8] to-[#fde6e7]">

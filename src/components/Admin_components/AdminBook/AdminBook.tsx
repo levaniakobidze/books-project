@@ -5,7 +5,8 @@ import { AuthContext } from "@/context/auth";
 import { BooksContext } from "@/context/books";
 const AdminBook = ({ book }: { book: any }) => {
   const { user } = useContext(AuthContext);
-  const { purchaseHistory } = useContext(BooksContext);
+  const { purchaseHistory, setShowAccessWaitingModal } =
+    useContext(BooksContext);
 
   let findBook;
   let findAccessId;
@@ -44,7 +45,12 @@ const AdminBook = ({ book }: { book: any }) => {
             ნახვა
           </Link>
         ) : (
-          <div className=" bg-pink-400 text-white text-sm font-bold rounded-tl-lg rounded-bl-lg px-3 py-1  sm:mt-0 md:shadow-xl  sm:flex flex-col justify-center items-center">
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowAccessWaitingModal(true);
+            }}
+            className=" bg-pink-400 text-white text-sm font-bold rounded-tl-lg rounded-bl-lg px-3 py-1  sm:mt-0 md:shadow-xl  sm:flex flex-col justify-center items-center">
             დაელოდეთ
           </div>
         )}

@@ -42,6 +42,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   const [purchaseHistory, setPurchaseHistory] = useState([]);
   const [showPurchaseSuccessModal, setShowPurchaseSuccessModal] =
     useState(false);
+  const [showAccessWaitingModal, setShowAccessWaitingModal] = useState(false);
   const [purchase, setPurchase] = useState({
     cardName: "",
     userId: "",
@@ -109,6 +110,8 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       value={{
         setShowBuyBookModal,
         getPurchaseHistory,
+        showAccessWaitingModal,
+        setShowAccessWaitingModal,
         showPurchaseSuccessModal,
         setShowPurchaseSuccessModal,
         purchaseHistory,

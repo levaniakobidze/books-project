@@ -11,7 +11,8 @@ interface IProps {
 }
 
 const Book: FC<IProps> = ({ book }) => {
-  const { handleBuyBook, purchaseHistory } = useContext(BooksContext);
+  const { handleBuyBook, purchaseHistory, setShowAccessWaitingModal } =
+    useContext(BooksContext);
   const { user } = useContext(AuthContext);
 
   let findBook;
@@ -79,7 +80,9 @@ const Book: FC<IProps> = ({ book }) => {
             </Link>
           )}
           {findBook && !findAccessId && (
-            <div className=" bg-pink-400 text-white text-sm font-bold rounded-tl-lg rounded-bl-lg px-3 py-1  sm:mt-0 md:shadow-xl  sm:flex flex-col justify-center items-center">
+            <div
+              onClick={() => setShowAccessWaitingModal(true)}
+              className=" bg-pink-400 text-white text-sm font-bold rounded-tl-lg rounded-bl-lg px-3 py-1  sm:mt-0 md:shadow-xl  sm:flex flex-col justify-center items-center">
               დაელოდეთ
             </div>
           )}

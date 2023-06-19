@@ -10,12 +10,14 @@ import { Tab } from "@headlessui/react";
 import Link from "next/link";
 import { AuthContext } from "@/context/auth";
 import BuyBooks from "@/components/Modals/BuyBook/BuyBook";
+import AccessWaiting from "@/components/Modals/AccessWaiting/AccessWaiting";
 
 const Description = () => {
   const router: NextRouter = useRouter();
   const { id } = router.query;
   const [book, setBook] = useState<any>(null);
-  const { books, handleBuyBook, purchaseHistory } = useContext(BooksContext);
+  const { books, handleBuyBook, purchaseHistory, setShowAccessWaitingModal } =
+    useContext(BooksContext);
   const { isAuth, user } = useContext(AuthContext);
 
   const [findBook, setFindBook] = useState({});
@@ -42,6 +44,7 @@ const Description = () => {
   return (
     <Fragment>
       <BuyBooks />
+      <AccessWaiting />
       <Navigation />
       <div className="bg-white">
         <div className="mx-auto px-4   py-16 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">
@@ -89,7 +92,9 @@ const Description = () => {
                   </Link>
                 )}
                 {findBook && !findAccessId && (
-                  <div className="flex w-full  items-center justify-center rounded-md border border-transparent bg-pink-400 cursor-pointer px-8 py-3 text-sm  font-bold text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                  <div
+                    onClick={() => setShowAccessWaitingModal(true)}
+                    className="flex w-full  items-center justify-center rounded-md border border-transparent bg-pink-400 cursor-pointer px-8 py-3 text-sm  font-bold text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-gray-50">
                     დაელოდეთ წვდომას
                   </div>
                 )}

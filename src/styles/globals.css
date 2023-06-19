@@ -86,7 +86,7 @@ body {
 .progress {
   width: 10%;
   height: 5px;
-  background-color: #e907de;
+  background-color: #07a9e9;
   animation: progres 1s forwards;
   position: absolute;
   top: 0;

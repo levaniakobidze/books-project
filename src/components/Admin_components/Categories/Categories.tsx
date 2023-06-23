@@ -7,6 +7,7 @@ const Categories = () => {
   const { categories, getCategories } = useContext(BooksContext);
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const addCategory = async () => {
     setLoading(true);
@@ -27,6 +28,20 @@ const Categories = () => {
     }
   };
 
+  const handleDeleteCategory = async (id: any) => {
+    setDeleteLoading(true);
+    try {
+      await axios.delete(
+        `https://books-project-back-production.up.railway.app/api/category/${id}`
+      );
+      getCategories();
+      setDeleteLoading(false);
+    } catch (error) {
+      console.log(error);
+      setDeleteLoading(false);
+    }
+  };
+
   return (
     <Fragment>
       <p className="text-gray-500 my-5">კატეგორიები</p>
@@ -43,8 +58,11 @@ const Categories = () => {
                 <p className="text-sm">category: ({index + 1})</p>
               </div>
               <div className="text-right">
-                <button className="border-none bg-red-600 text-white px-4 py-2 cursor-pointer">
-                  წაშლა
+                <button
+                  disabled={deleteLoading}
+                  onClick={() => handleDeleteCategory(category.id)}
+                  className="border-none bg-red-600 text-white px-4 py-2 cursor-pointer">
+                  წაშლა {deleteLoading && "..."}
                 </button>
               </div>
             </div>

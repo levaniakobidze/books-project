@@ -101,3 +101,11 @@ body {
     width: 80%;
   }
 }
+
+@media print {
+  /* Add your custom styles for printing here */
+  .no-print {
+    /* display: none; */
+    background-color: red;
+  }
+}

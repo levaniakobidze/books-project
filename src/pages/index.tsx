@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <Fragment>
       <Navigation />
-      <div className="max:w-lg  w-full min:h-screen flex flex-col ">
+      <div className="max:w-lg  w-full min:h-screen flex flex-col no-print  ">
         <VideoSlider />
         {categories.length >= 4 && (
           <div>

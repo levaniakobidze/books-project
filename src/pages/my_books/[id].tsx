@@ -19,7 +19,6 @@ const Description = () => {
   const { books, handleBuyBook, purchaseHistory, setShowAccessWaitingModal } =
     useContext(BooksContext);
   const { isAuth, user } = useContext(AuthContext);
-
   const [findBook, setFindBook] = useState({});
   const [findAccessId, setFindAccessId] = useState<any>("");
 
@@ -75,7 +74,15 @@ const Description = () => {
               </div>
               <p className="mt-6 text-gray-500">{book?.description}</p>
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
-                {!findBook && !findAccessId && (
+                {!findBook && !findAccessId && book?.price !== 1 && (
+                  <button
+                    onClick={() => handleBuyBook(book)}
+                    type="button"
+                    className="flex w-full items-center font-bold justify-center rounded-md border border-transparent bg-blue-400 px-8 py-3 text-base  text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                    ყიდვა {book?.price}ლ
+                  </button>
+                )}
+                {!isAuth && book?.price !== 1 && (
                   <button
                     onClick={() => handleBuyBook(book)}
                     type="button"
@@ -84,14 +91,14 @@ const Description = () => {
                   </button>
                 )}
 
-                {findAccessId && (
+                {findAccessId || book?.price === 1 ? (
                   <Link
                     href={`/open_book/${book?.id}`}
                     className="flex w-full items-center font-bold justify-center rounded-md border border-transparent bg-green-400 px-8 py-3 text-base text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
                     ნახვა
                   </Link>
-                )}
-                {findBook && !findAccessId && (
+                ) : null}
+                {findBook && !findAccessId && book?.price !== 1 && isAuth && (
                   <div
                     onClick={() => setShowAccessWaitingModal(true)}
                     className="flex w-full  items-center justify-center rounded-md border border-transparent bg-pink-400 cursor-pointer px-8 py-3 text-sm  font-bold text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-gray-50">

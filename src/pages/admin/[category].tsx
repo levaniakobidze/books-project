@@ -24,13 +24,12 @@ import Categories from "../../components/Admin_components/Categories/Categories"
 import Users from "@/components/Admin_components/Users/Users";
 import Books from "@/components/Admin_components/Books/Books";
 import Logo from "../../../public/assets/logo.png";
+import Videos from "@/components/Admin_components/Videos/Videos";
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
 const Index: FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [paySuccessful, setPaySuccessful] = useState<boolean>(false);
-  const [isProMember, setIsProMember] = useState(false);
   const router = useRouter();
   const category = router.query.category;
 
@@ -54,6 +53,12 @@ const Index: FC = () => {
       current: false,
     },
     {
+      name: "ვიდეოები",
+      href: "/admin/admin_videos",
+      icon: AiOutlineHome,
+      current: false,
+    },
+    {
       name: "იუზერები",
       href: "/admin/admin_users",
       icon: AiOutlineHome,
@@ -71,6 +76,8 @@ const Index: FC = () => {
         return <Books />;
       case "admin_users":
         return <Users />;
+      case "admin_videos":
+        return <Videos />;
       default:
         break;
     }
@@ -134,7 +141,7 @@ const Index: FC = () => {
                     /> */}
                     <Link href="/">
                       <Image
-                        className="h-[40px] w-[150px]"
+                        className="h-[auto] w-[auto]"
                         src={Logo}
                         alt="logo"
                         width={100}
@@ -153,7 +160,7 @@ const Index: FC = () => {
                             className={classNames(
                               `/dashboard/${category}` === item.href
                                 ? "bg-gray-900 text-white"
-                                : "text-gray-700 hover:bg-gray-700 hover:text-white",
+                                : "text-gray-400 hover:bg-gray-700 hover:text-white",
                               "group flex items-center rounded-md px-2 py-2 text-base font-medium"
                             )}>
                             <item.icon
@@ -192,7 +199,7 @@ const Index: FC = () => {
               /> */}
               <Link href="/">
                 <Image
-                  className="h-[40px] w-[150px]"
+                  className="h-[auto] w-[auto]"
                   src={Logo}
                   alt="logo"
                   width={100}

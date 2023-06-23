@@ -2,13 +2,15 @@ import React, { useState, useEffect, useContext, Fragment } from "react";
 import { IBook } from "@/types/bookTypes";
 import { useRouter, NextRouter } from "next/router";
 import { BooksContext } from "@/context/books";
+import { AuthContext } from "../../context/auth";
 import Navigation from "@/components/Navigation/Navigation";
 
 const Open_book = () => {
   const router = useRouter();
   const { id } = router.query;
   const [book, setBook] = useState(null);
-  const { books, handleBuyBook } = useContext(BooksContext);
+  const { books } = useContext(BooksContext);
+  const { user, isAuth } = useContext(AuthContext);
   const [selectedBookIndex, setSelectedBookIndex] = useState(0);
 
   useEffect(() => {
@@ -16,10 +18,27 @@ const Open_book = () => {
     setBook(filtered);
   }, [id, books]);
 
+  useEffect(() => {
+    const accessId = book?.access.find((accId) => accId === user.id);
+    if (book && Object.keys(user).length !== 0) {
+      if (!accessId && book?.price !== 1) {
+        router.push("/");
+      }
+    }
+  }, [book]);
+
+  useEffect(() => {
+    if (!isAuth) {
+      router.push("/");
+    }
+  }, []);
+
   return (
     <Fragment>
       <Navigation />
-      <div className="flex flex-col md:flex-row ">
+      <div
+        className="flex flex-col md:flex-row no-print "
+        onContextMenu={(e) => e.preventDefault()}>
         <div className=" w-full md:max-w-[300px]    bg-blue-400 ">
           <ul className="p-3 md:p-10  gap-10 static md:fixed">
             <h1 className="text-lg">{book?.title}</h1>
@@ -43,7 +62,7 @@ const Open_book = () => {
         </div>
         {book && (
           <div
-            className="p-3 md:p-10 w-100 mx-0-auto book disabledCopy overflow-y-scroll h-screen w-full"
+            className="p-3 md:p-10 w-100 mx-0-auto book disabledCopy overflow-y-scroll h-screen w-full no-print"
             onContextMenu={(e) => e.preventDefault()}
             dangerouslySetInnerHTML={{
               __html: book?.pages[selectedBookIndex].content,

@@ -30,6 +30,24 @@ const App = ({ Component, pageProps }: AppProps) => {
     };
   }, []);
 
+  useEffect(() => {
+    const handlePrint = () => {
+      const style = document.createElement("style");
+      style.setAttribute("media", "print");
+      style.textContent = `
+        .no-print { display: none !important; }
+      `;
+      document.head.appendChild(style);
+      document.body.classList.add("print-mode");
+    };
+
+    window.addEventListener("beforeprint", handlePrint);
+
+    return () => {
+      window.removeEventListener("beforeprint", handlePrint);
+    };
+  }, []);
+
   return (
     <AppContext>
       <Layout>

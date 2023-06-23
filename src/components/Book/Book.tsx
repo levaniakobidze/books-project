@@ -45,7 +45,7 @@ const Book: FC<IProps> = ({ book }) => {
         <div className=" my-5 flex  items-center justify-between ">
           <div className="  bg-blue-400  rounded-tr-lg rounded-br-lg px-3 py-1  sm:mt-0 md:shadow-xl  sm:flex flex-col justify-center items-center">
             <p className="    font-bold text-sm   text-[#ffffff] ">
-              {book.price}ლ
+              {book.price === 1 ? "უფასო" : `${book.price}ლ`}
             </p>
           </div>
           {/* <p className="text-[13px]">Levan masadashvili</p> */}
@@ -65,20 +65,20 @@ const Book: FC<IProps> = ({ book }) => {
               ნახვა
             </Link>
           )} */}
-          {!findBook && !findAccessId && (
+          {!findBook && !findAccessId && book.price !== 1 && (
             <button
               onClick={() => handleBuyBook(book)}
               className=" bg-blue-400 text-white text-sm font-bold  rounded-tl-lg rounded-bl-lg px-3 py-1  sm:mt-0 md:shadow-xl  sm:flex flex-col justify-center items-center">
               ყიდვა
             </button>
           )}
-          {findAccessId && (
+          {findAccessId || book.price === 1 ? (
             <Link
               href={`/open_book/${book?.id}`}
               className=" bg-green-400 text-white text-sm font-bold  rounded-tl-lg rounded-bl-lg px-3 py-1  sm:mt-0 md:shadow-xl  sm:flex flex-col justify-center items-center">
               ნახვა
             </Link>
-          )}
+          ) : null}
           {findBook && !findAccessId && (
             <div
               onClick={() => setShowAccessWaitingModal(true)}

@@ -37,7 +37,7 @@ function Navigation() {
 
   const navigation: InavTypes[] = [
     { name: "მთავარი", href: "/", needAuth: false, icon: HomeWorkIcon },
-    { name: "წიგნები", href: "/books", needAuth: false, icon: MenuBookIcon },
+    { name: "კატალოგი", href: "/books", needAuth: false, icon: MenuBookIcon },
     {
       name: "კატეგორიები",
       href: "/categories",
@@ -48,6 +48,12 @@ function Navigation() {
       name: "ჩემი წიგნები",
       href: "/my_books",
       needAuth: true,
+      icon: MenuBookIcon,
+    },
+    {
+      name: "უფასო რესურსები",
+      href: "/free_resources",
+      needAuth: false,
       icon: MenuBookIcon,
     },
     {
@@ -84,7 +90,7 @@ function Navigation() {
         <div className="font-bold text-3xl text-gray-400 cursor-pointer">
           <Link href="/">
             <Image
-              className="h-[40px] w-[150px]"
+              className="h-[auto] w-[auto]"
               src={Logo}
               alt="logo"
               width={100}
@@ -129,8 +135,8 @@ function Navigation() {
                         pathname === nav.href
                           ? "text-[#ffadb1] font-bold  border-b-2 py-3 border-blue-400"
                           : "text-gray-400"
-                      } hover:text-[#ffadb1]  py-6  font-bold transition-all text-sm tracking-wider`}>
-                      <nav.icon className="text-[20px] mx-2  md:hidden lg:inline" />
+                      } hover:text-[#ffadb1]  py-6  font-bold transition-all text-[13px] tracking-wider`}>
+                      <nav.icon className="text-[13px] mx-2  md:hidden lg:inline" />
                       {nav.name}
                     </button>
                   </Link>
@@ -174,7 +180,16 @@ function Navigation() {
           !showMenu ? "left-[-100%] " : "left-0"
         } px-10 w-[80%] sm:w-full  absolute top-0 bottom-0 z-[999] sm:max-w-[40%] h-[120vh] bg-black transition-all ease-in-out duration-1000`}
         onClick={handleClick}>
-        <div className="text-right mt-5">
+        <div className="text-right mt-5 flex  items-center justify-between">
+          <Link href="/">
+            <Image
+              className="h-[auto] w-[auto]"
+              src={Logo}
+              alt="logo"
+              width={100}
+              height={100}
+            />
+          </Link>
           <CloseIcon
             onClick={() => setShowMenu(false)}
             className="text-white hover:text-red-500 transition cursor-pointer "

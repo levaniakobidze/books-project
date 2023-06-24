@@ -3,10 +3,9 @@ import type { NextRequest } from "next/server";
 
 // This function can be marked `async` if using `await` inside
 export function middleware(req: NextRequest) {
-  const token = req.cookies.has("token");
-
+  const token = req.cookies.get("token");
   if (!token) {
-    return NextResponse.redirect(process.env.NEXT_PUBLIC_URL + "auth/login"!);
+    return NextResponse.redirect("http://localhost:3000" + "/auth/login"!);
   }
 
   return NextResponse.next();

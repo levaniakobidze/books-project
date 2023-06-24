@@ -3,8 +3,6 @@ import { IBook } from "@/types/bookTypes";
 import { useContext } from "react";
 import { AuthContext } from "./auth";
 import axios from "axios";
-import { userAgent } from "next/server";
-import { useRouter } from "next/router";
 
 interface BooksContextType {
   books: IBook[];
@@ -20,6 +18,9 @@ interface ParentComponentProps {
 const ContextProvider = ({ children }: ParentComponentProps) => {
   const { user, token, isAuth } = useContext(AuthContext);
   const [showLoginRegisterModal, setShowLoginRegisterModal] = useState(false);
+  const [showDeleteBookModal, setShowDeleteBookModal] = useState(false);
+  const [selectedDeleteBookId, setSelectedDeleteBookId] = useState("");
+
   const [bookContent, setBookContent] = useState({
     title: "",
     poster: "",
@@ -108,8 +109,12 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   return (
     <BooksContext.Provider
       value={{
+        selectedDeleteBookId,
+        setSelectedDeleteBookId,
         setShowBuyBookModal,
         getPurchaseHistory,
+        showDeleteBookModal,
+        setShowDeleteBookModal,
         showAccessWaitingModal,
         setShowAccessWaitingModal,
         showPurchaseSuccessModal,

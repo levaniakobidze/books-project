@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { title } from "process";
+import DeleteBook from "@/components/Modals/DeleteBook/DeleteBook";
 import Link from "next/link";
 import { BooksContext } from "@/context/books";
 import { AuthContext } from "@/context/auth";
@@ -8,7 +9,8 @@ const Books = () => {
   const [books, setBooks] = useState<any>([]);
   const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false);
-  const { setBookContent } = useContext(BooksContext);
+  const { setBookContent, setShowDeleteBookModal, setSelectedDeleteBookId } =
+    useContext(BooksContext);
   const { user } = useContext(AuthContext);
 
   const getBooks = async () => {
@@ -44,22 +46,9 @@ const Books = () => {
     }
   };
 
-  const deleteBook = async (id: string) => {
-    setLoading(true);
-    try {
-      await axios.delete(
-        `https://books-project-back-production.up.railway.app/api/books/${id}`
-      );
-      getBooks();
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="flex flex-wrap gap-6">
+      <DeleteBook setBooks={setBooks} />
       {books &&
         books.map((book: any, index: number) => {
           return (
@@ -83,7 +72,10 @@ const Books = () => {
                     <Link href="/admin/add_book">Edit</Link>
                   </button>
                   <button
-                    onClick={() => deleteBook(book.id)}
+                    onClick={() => {
+                      setSelectedDeleteBookId(book.id);
+                      setShowDeleteBookModal(true);
+                    }}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                     წაშლა{loading && "..."}
                   </button>

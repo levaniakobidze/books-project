@@ -30,7 +30,7 @@ const Book: FC<IProps> = ({ book }) => {
         className="rounded shadow-lg  border max-h-[400px]">
         <div className="px-3">
           <img
-            className="w-full object-cover  h-[220px]"
+            className="w-full object-cover  h-[250px]"
             src={process.env.NEXT_PUBLIC_URL + book?.poster}
             alt="asda"
           />
@@ -87,7 +87,7 @@ const Book: FC<IProps> = ({ book }) => {
             </div>
           )}
         </div>
-        <p className=" hidden sm:flex mb-3   px-5 text-center mt-5 text-მდ text-gray-500 ">
+        <p className=" hidden sm:flex mb-3   px-5 text-left mt-5 text-მდ text-gray-500 ">
           {book.description.substr(0, 50)} ...
         </p>
       </Link>

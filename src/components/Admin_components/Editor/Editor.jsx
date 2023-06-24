@@ -50,7 +50,7 @@ const TextEditor = () => {
       ...updatedPages[pageContent.pageIndex],
       title: pagetTitle,
       content: newPageContent,
-      audio: "",
+      audio: "sdsad",
     };
     setBookContent((prevBook) => ({
       ...prevBook,
@@ -130,6 +130,7 @@ const TextEditor = () => {
   }
 
   const upload = async () => {
+    console.log(bookContent);
     setLoading(true);
     try {
       if (

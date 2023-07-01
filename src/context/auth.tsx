@@ -17,6 +17,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [user, setUser] = useState({});
   const [token, setToken] = useState({});
+  const [adminToken, setAdminToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [showRegisterSuccessModal, setShowRegisterSuccessModal] =
@@ -97,6 +98,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     setIsAuth(false);
     Cookies.remove("token");
     Cookies.remove("isAuth");
+    localStorage.removeItem("admin_token");
     localStorage.removeItem("token");
     localStorage.removeItem("isAuth");
     localStorage.removeItem("user");
@@ -111,6 +113,8 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
       value={{
         user,
         token,
+        adminToken,
+        setAdminToken,
         isAuth,
         handleLogin,
         handleLogout,

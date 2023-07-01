@@ -12,6 +12,10 @@ const people = [
 
 const Users = () => {
   const [users, setUsers] = useState<any>([]);
+  const [displayUsers, setDisplayUsers] = useState<any>([]);
+  const [username, setUsername] = useState("");
+  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
 
   const getUsers = async () => {
     try {
@@ -19,6 +23,7 @@ const Users = () => {
         "https://books-project-back-production.up.railway.app/api/alluser"
       );
       setUsers(resp.data);
+      setDisplayUsers(resp.data);
     } catch (error) {
       console.log(error);
     }
@@ -27,8 +32,81 @@ const Users = () => {
   useEffect(() => {
     getUsers();
   }, []);
+
+  const handleFilter = () => {
+    const filteredArray = users.filter(
+      (user: any) =>
+        user.email.includes(email) &&
+        user.userName.toLowerCase().includes(username.toLowerCase()) &&
+        user.id.toString().includes(id)
+    );
+    setDisplayUsers(filteredArray);
+  };
+
+  const handleClear = () => {
+    setUsername("");
+    setId("");
+    setEmail("");
+  };
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
+      <div>
+        <div className="mb-6">
+          <label
+            htmlFor="default-input"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Username
+          </label>
+          <input
+            type="text"
+            id="default-input"
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            htmlFor="default-input"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Email
+          </label>
+          <input
+            type="text"
+            id="default-input"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            htmlFor="default-input"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            ID
+          </label>
+          <input
+            type="text"
+            id="default-input"
+            onChange={(e) => setId(e.target.value)}
+            value={id}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+        <div className="flex gap-5">
+          <button
+            onClick={handleFilter}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            ძებნა
+          </button>{" "}
+          <button
+            onClick={handleClear}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            გასუფთავება
+          </button>
+        </div>
+      </div>
       <div className=" flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle">
@@ -64,8 +142,8 @@ const Users = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {users &&
-                  users.map((user: any) => (
+                {displayUsers &&
+                  displayUsers.map((user: any) => (
                     <tr key={user.email}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
                         {user.userName}

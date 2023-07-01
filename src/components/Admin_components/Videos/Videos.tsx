@@ -1,18 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { log } from "console";
+import { AuthContext } from "@/context/auth";
 
 const Videos = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [videoUrl, setVideoUrl] = useState("");
   const [selectedId, setSelectedId] = useState("");
+  const { adminToken } = useContext(AuthContext);
+
+  const headers: any = {
+    Authorization: `Bearer ${adminToken}`,
+    accept: "application/json",
+    "Content-Type": "application/json",
+  };
 
   const getVideos = async () => {
     setLoading(true);
-
     try {
-      const resp = await axios.get(process.env.NEXT_PUBLIC_URL + "/api/videos");
+      const resp = await axios.get(
+        process.env.NEXT_PUBLIC_URL + "/api/videos",
+        { headers }
+      );
       setVideos(resp.data);
       setLoading(false);
     } catch (error) {
@@ -27,7 +37,9 @@ const Videos = () => {
   const handleDeleteVideo = async (id: string) => {
     setLoading(true);
     try {
-      await axios.delete(process.env.NEXT_PUBLIC_URL + `/api/videos/${id}`);
+      await axios.delete(process.env.NEXT_PUBLIC_URL + `/api/videos/${id}`, {
+        headers,
+      });
       getVideos();
       setLoading(false);
     } catch (error) {
@@ -55,11 +67,12 @@ const Videos = () => {
   const addVideo = async () => {
     const embedLink: any = convertToEmbedLink(videoUrl);
     const encodedUrl = encodeEmbedLink(embedLink);
-    console.log(encodedUrl);
     setLoading(true);
     try {
       await axios.post(
-        process.env.NEXT_PUBLIC_URL + `/api/videos/${encodedUrl}`
+        process.env.NEXT_PUBLIC_URL + `/api/videos/${encodedUrl}`,
+        {},
+        { headers }
       );
       setVideoUrl("");
       getVideos();

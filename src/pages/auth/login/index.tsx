@@ -2,11 +2,16 @@ import Navigation from "@/components/Navigation/Navigation";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { AuthContext } from "@/context/auth";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 function Login() {
-  const { handleLogin, loading, loginError } = useContext(AuthContext);
+  const { handleLogin, loading, loginError, adminToken, setAdminToken } =
+    useContext(AuthContext);
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
+  const router = useRouter();
+  const { key } = router.query;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -28,6 +33,23 @@ function Login() {
   };
 
   useEffect(() => {}, [credentials]);
+
+  useEffect(() => {
+    const getAccessOnAdmin = () => {
+      axios
+        .post(`${process.env.NEXT_PUBLIC_URL}/api/login/admin?key=${key}`)
+        .then((resp) => {
+          console.log(resp?.data);
+          setAdminToken(resp.data);
+          localStorage.setItem("admin_token", resp.data);
+          router.push("/admin/add_book");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getAccessOnAdmin();
+  }, [key]);
 
   return (
     <Fragment>

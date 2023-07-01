@@ -11,7 +11,13 @@ const Books = () => {
   const [loading, setLoading] = useState(false);
   const { setBookContent, setShowDeleteBookModal, setSelectedDeleteBookId } =
     useContext(BooksContext);
-  const { user } = useContext(AuthContext);
+  const { user, adminToken } = useContext(AuthContext);
+
+  const headers: any = {
+    Authorization: `Bearer ${adminToken}`,
+    accept: "application/json",
+    "Content-Type": "application/json",
+  };
 
   const getBooks = async () => {
     try {
@@ -37,7 +43,8 @@ const Books = () => {
     try {
       await axios.put(
         `https://books-project-back-production.up.railway.app/api/access/${book.id}/${userId}`,
-        access
+        access,
+        { headers }
       );
       setLoading(false);
     } catch (error) {

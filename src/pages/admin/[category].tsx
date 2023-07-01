@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
@@ -25,11 +25,13 @@ import Users from "@/components/Admin_components/Users/Users";
 import Books from "@/components/Admin_components/Books/Books";
 import Logo from "../../../public/assets/logo.png";
 import Videos from "@/components/Admin_components/Videos/Videos";
+import { AuthContext } from "@/context/auth";
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
 const Index: FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { handleLogout, setAdminToken } = useContext(AuthContext);
   const router = useRouter();
   const category = router.query.category;
 
@@ -82,6 +84,14 @@ const Index: FC = () => {
         break;
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("admin_token")) {
+      setAdminToken(localStorage.getItem("admin_token"));
+    } else {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <>
@@ -263,7 +273,7 @@ const Index: FC = () => {
                         src={UserLogo}
                         alt="Your Company"
                       /> */}
-                      asdasd
+                      გასვლა
                     </Menu.Button>
                   </div>
                   <Transition
@@ -287,10 +297,11 @@ const Index: FC = () => {
 
                       <Menu.Item>
                         <p
+                          onClick={handleLogout}
                           className={classNames(
                             "block px-4 py-2 text-sm text-gray-700 cursor-pointer "
                           )}>
-                          გამოსვლა
+                          გასვლა
                         </p>
                       </Menu.Item>
                     </Menu.Items>

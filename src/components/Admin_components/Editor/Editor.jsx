@@ -7,6 +7,7 @@ import axios from "axios";
 import BookAdded from "@/components/Modals/BookAdded/BookAdded";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { AuthContext } from "@/context/auth";
 
 const TextEditor = () => {
   const editorRef = useRef(null);
@@ -24,6 +25,14 @@ const TextEditor = () => {
     setPageContent,
     categories,
   } = useContext(BooksContext);
+
+  const { adminToken } = useContext(AuthContext);
+
+  const headers = {
+    Authorization: `Bearer ${adminToken}`,
+    // accept: "application/json",
+    // "Content-Type": "application/json",
+  };
   const log = () => {
     if (editorRef.current) {
       console.log(editorRef.current.getContent());
@@ -130,7 +139,6 @@ const TextEditor = () => {
   }
 
   const upload = async () => {
-    console.log(bookContent);
     setLoading(true);
     try {
       if (
@@ -141,9 +149,11 @@ const TextEditor = () => {
         bookContent.description &&
         bookContent.pages
       ) {
+        console.log(headers);
         await axios.post(
           "https://books-project-back-production.up.railway.app/api/books",
-          formData
+          formData,
+          { headers }
         );
       } else {
         setLoading(false);

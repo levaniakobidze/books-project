@@ -47,7 +47,9 @@ const MyBooks = () => {
 
         {freeResources.length < 1 && (
           <div className="w-[100%] min-h-screen   flex justify-center items-center">
-            <p className="text-gray-500 text-3xl">,ჩემი წიგნები, - ცარიელია</p>
+            <p className="text-gray-500 text-3xl">
+              უფასო რესურსები არ არის დამატებული
+            </p>
           </div>
         )}
       </div>

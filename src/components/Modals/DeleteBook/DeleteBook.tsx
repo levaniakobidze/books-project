@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useContext } from "react";
 import { BooksContext } from "@/context/books";
 import axios from "axios";
+import { AuthContext } from "@/context/auth";
 
 export default function DeletBook(props: any) {
   const {
@@ -15,6 +16,12 @@ export default function DeletBook(props: any) {
   } = useContext(BooksContext);
   const cancelButtonRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const { adminToken } = useContext(AuthContext);
+  const headers: any = {
+    Authorization: `Bearer ${adminToken}`,
+    accept: "application/json",
+    "Content-Type": "application/json",
+  };
 
   const getBooks = async () => {
     try {
@@ -32,11 +39,11 @@ export default function DeletBook(props: any) {
   }, []);
 
   const deleteBook = async () => {
-    console.log("s");
     setLoading(true);
     try {
       await axios.delete(
-        `https://books-project-back-production.up.railway.app/api/books/${selectedDeleteBookId}`
+        `https://books-project-back-production.up.railway.app/api/books/${selectedDeleteBookId}`,
+        { headers }
       );
       getBooks();
       setLoading(false);

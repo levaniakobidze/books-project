@@ -2,12 +2,20 @@ import { BooksContext } from "@/context/books";
 import { ICategory } from "@/types/bookTypes";
 import React, { Fragment, useContext, useState } from "react";
 import axios from "axios";
+import { AuthContext } from "@/context/auth";
 
 const Categories = () => {
   const { categories, getCategories } = useContext(BooksContext);
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const { adminToken } = useContext(AuthContext);
+
+  const headers: any = {
+    Authorization: `Bearer ${adminToken}`,
+    accept: "application/json",
+    "Content-Type": "application/json",
+  };
 
   const addCategory = async () => {
     setLoading(true);
@@ -18,7 +26,8 @@ const Categories = () => {
     try {
       await axios.post(
         "https://books-project-back-production.up.railway.app/api/category",
-        { title: category }
+        { title: category },
+        { headers }
       );
       getCategories();
       setLoading(false);
@@ -32,7 +41,8 @@ const Categories = () => {
     setDeleteLoading(true);
     try {
       await axios.delete(
-        `https://books-project-back-production.up.railway.app/api/category/${id}`
+        `https://books-project-back-production.up.railway.app/api/category/${id}`,
+        { headers }
       );
       getCategories();
       setDeleteLoading(false);

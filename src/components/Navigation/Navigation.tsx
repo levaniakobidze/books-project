@@ -1,25 +1,18 @@
-import React, {
-  ReactHTMLElement,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AuthContext } from "@/context/auth";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import StyleIcon from "@mui/icons-material/Style";
-import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import InfoIcon from "@mui/icons-material/Info";
 import Dropdown from "../../components/Dropdown/Dropdown";
-import SettingsIcon from "@mui/icons-material/Settings";
 import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
+import FolderSpecialIcon from "@mui/icons-material/FolderSpecial";
 import Logo from "../../../public/assets/logo.png";
 import Image from "next/image";
 
@@ -45,16 +38,16 @@ function Navigation() {
       icon: StyleIcon,
     },
     {
-      name: "ჩემი წიგნები",
+      name: "ჩემი ბიბლიოთეკა",
       href: "/my_books",
       needAuth: true,
-      icon: MenuBookIcon,
+      icon: LocalLibraryIcon,
     },
     {
       name: "უფასო რესურსები",
       href: "/free_resources",
       needAuth: false,
-      icon: MenuBookIcon,
+      icon: FolderSpecialIcon,
     },
     {
       name: "ჩვენს შესახებ",

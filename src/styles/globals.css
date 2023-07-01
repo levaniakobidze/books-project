@@ -86,7 +86,7 @@ body {
 .progress {
   width: 10%;
   height: 5px;
-  background-color: #07a9e9;
+  background-color: #e907e9;
   animation: progres 1s forwards;
   position: absolute;
   top: 0;
@@ -107,5 +107,11 @@ body {
   .no-print {
     /* display: none; */
     background-color: red;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .dropdown {
+    right: 0 !important;
   }
 }

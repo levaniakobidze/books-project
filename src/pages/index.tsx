@@ -17,6 +17,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const { categories, books } = useContext(BooksContext);
+
   return (
     <Fragment>
       <Navigation />

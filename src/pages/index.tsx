@@ -12,6 +12,7 @@ import SearchWord from "@/components/SerachWord/SearchWord";
 import Book from "@/components/Book/Book";
 import { IBook } from "@/types/bookTypes";
 import LoginRegister from "../components/Modals/LoginRegister/LoginRegister";
+import Word from "@/components/Word/Word";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,9 @@ export default function Home() {
       <Navigation />
       <div className="max:w-lg  w-full min:h-screen flex flex-col no-print  ">
         <VideoSlider />
+        <div>
+          <Word />
+        </div>
         {categories.length >= 4 && (
           <div>
             <h1 className="text-center text-gray-500 font-bold text-2xl tracking-wider">
@@ -34,6 +38,7 @@ export default function Home() {
             </div>
           </div>
         )}
+
         <div className="mt-20">
           <h1 className="text-center mb-10 text-gray-500 font-bold text-2xl tracking-wider">
             წიგნები

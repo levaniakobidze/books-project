@@ -16,8 +16,13 @@ const Description = () => {
   const router: NextRouter = useRouter();
   const { id } = router.query;
   const [book, setBook] = useState<any>(null);
-  const { books, handleBuyBook, purchaseHistory, setShowAccessWaitingModal } =
-    useContext(BooksContext);
+  const {
+    books,
+    handleBuyBook,
+    purchaseHistory,
+    setShowAccessWaitingModal,
+    setShowLoginRegisterModal,
+  } = useContext(BooksContext);
   const { isAuth, user } = useContext(AuthContext);
   const [findBook, setFindBook] = useState({});
   const [findAccessId, setFindAccessId] = useState<any>("");
@@ -39,6 +44,14 @@ const Description = () => {
       setFindAccessId(book?.access.find((accId: any) => accId === user.id));
     }
   }, [books, book]);
+
+  const seeBook = (id: string) => {
+    if (!isAuth) {
+      setShowLoginRegisterModal(true);
+      return;
+    }
+    router.push(`/open_book/${book?.id}`);
+  };
 
   return (
     <Fragment>
@@ -92,11 +105,11 @@ const Description = () => {
                 )}
 
                 {findAccessId || book?.price === 1 ? (
-                  <Link
-                    href={`/open_book/${book?.id}`}
+                  <button
+                    onClick={() => seeBook(book.id)}
                     className="flex w-full items-center font-bold justify-center rounded-md border border-transparent bg-green-400 px-8 py-3 text-base text-white hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
                     ნახვა
-                  </Link>
+                  </button>
                 ) : null}
                 {findBook && !findAccessId && book?.price !== 1 && isAuth && (
                   <div

@@ -28,7 +28,7 @@ const Open_book = () => {
   }, [book]);
 
   useEffect(() => {
-    if (!isAuth) {
+    if (!isAuth && book?.price !== 1) {
       router.push("/");
     }
   }, []);

@@ -6,14 +6,20 @@ import { BooksContext } from "@/context/books";
 import Link from "next/link";
 import BuyBooks from "../Modals/BuyBook/BuyBook";
 import { AuthContext } from "@/context/auth";
+import { useRouter } from "next/router";
 interface IProps {
   book: IBook;
 }
 
 const Book: FC<IProps> = ({ book }) => {
-  const { handleBuyBook, purchaseHistory, setShowAccessWaitingModal } =
-    useContext(BooksContext);
-  const { user } = useContext(AuthContext);
+  const {
+    handleBuyBook,
+    purchaseHistory,
+    setShowAccessWaitingModal,
+    setShowLoginRegisterModal,
+  } = useContext(BooksContext);
+  const { user, isAuth } = useContext(AuthContext);
+  const router = useRouter();
 
   let findBook;
   let findAccessId;
@@ -21,6 +27,14 @@ const Book: FC<IProps> = ({ book }) => {
     findBook = purchaseHistory.find((b: any) => b.bookId === book.id);
     findAccessId = book?.access.find((accId) => accId === user.id);
   }
+
+  const seeBook = (id: string) => {
+    if (!isAuth) {
+      setShowLoginRegisterModal(true);
+      return;
+    }
+    router.push(`/open_book/${book?.id}`);
+  };
 
   return (
     <>
@@ -73,11 +87,11 @@ const Book: FC<IProps> = ({ book }) => {
             </button>
           )}
           {findAccessId || book.price === 1 ? (
-            <Link
-              href={`/open_book/${book?.id}`}
+            <button
+              onClick={() => seeBook(book.id)}
               className=" bg-green-400 text-white text-sm font-bold  rounded-tl-lg rounded-bl-lg px-3 py-1  sm:mt-0 md:shadow-xl  sm:flex flex-col justify-center items-center">
               ნახვა
-            </Link>
+            </button>
           ) : null}
           {findBook && !findAccessId && (
             <div

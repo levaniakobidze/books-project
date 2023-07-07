@@ -20,7 +20,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   const [showLoginRegisterModal, setShowLoginRegisterModal] = useState(false);
   const [showDeleteBookModal, setShowDeleteBookModal] = useState(false);
   const [selectedDeleteBookId, setSelectedDeleteBookId] = useState("");
-
+const [selectedBookId,setSelectedBookId] = useState('')
   const [bookContent, setBookContent] = useState({
     title: "",
     poster: "",
@@ -140,6 +140,8 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
         setShowLoginRegisterModal,
         getCategories,
         getAllBooks,
+          selectedBookId,
+          setSelectedBookId
       }}>
       {children}
     </BooksContext.Provider>

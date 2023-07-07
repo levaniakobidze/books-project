@@ -8,6 +8,7 @@ import BookAdded from "@/components/Modals/BookAdded/BookAdded";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { AuthContext } from "@/context/auth";
+import {router} from "next/client";
 
 const EditBook = () => {
   const editorRef = useRef(null);
@@ -24,6 +25,8 @@ const EditBook = () => {
     pageContent,
     setPageContent,
     categories,
+      selectedBookId,
+    setSelectedBookId
   } = useContext(BooksContext);
 
   const { adminToken } = useContext(AuthContext);
@@ -123,31 +126,33 @@ const EditBook = () => {
     }
   }, [pageContent]);
 
-  const formData = new FormData();
-  const arrayOfObjects = bookContent.pages;
+  // const formData = new FormData();
+  // const arrayOfObjects = bookContent.pages;
+  //
+  // formData.append("title", bookContent.title);
+  // formData.append("author", bookContent.author);
+  // formData.append("description", bookContent.description);
+  // formData.append("price", bookContent.price);
+  // formData.append("categories", bookContent.categories);
+  //
+  // for (let index = 0; index < bookContent.pages.length; index++) {
+  //   const element = bookContent.pages[index];
+  //   formData.append("pages[]", JSON.stringify(element));
+  // }
 
-  formData.append("title", bookContent.title);
-  formData.append("author", bookContent.author);
-  formData.append("description", bookContent.description);
-  formData.append("price", bookContent.price);
-  formData.append("categories", bookContent.categories);
-
-  for (let index = 0; index < bookContent.pages.length; index++) {
-    const element = bookContent.pages[index];
-    formData.append("pages[]", JSON.stringify(element));
-  }
-
-  const updateBook = async (id) => {
+  const updateBook = async () => {
     const postObj = {
       title: bookContent.title,
       description: bookContent.description,
       price: bookContent.price,
       author: bookContent.author,
       categories: bookContent.categories,
-      pages: bookContent.pages,
+      pages: bookContent.pages.map((page) => {
+        delete page._id
+        return page
+      }),
     };
-    console.log(postObj);
-    // setLoading(true);
+    setLoading(true)
     try {
       if (
         bookContent.title &&
@@ -158,8 +163,8 @@ const EditBook = () => {
         bookContent.pages
       ) {
         await axios.put(
-          `https://books-project-back-production.up.railway.app/api/books/${id}`,
-          postObj,
+          `https://books-project-back-production.up.railway.app/api/books/${selectedBookId}`,
+            postObj,
           { headers }
         );
       } else {
@@ -175,9 +180,11 @@ const EditBook = () => {
         categories: [],
         pages: [],
       });
+      setSelectedBookId('')
       setSelectedImg("");
       setLoading(false);
       setShowModal(true);
+      router.push('/admin/admin_books')
     } catch (error) {
       console.log(error);
     }
@@ -482,7 +489,7 @@ const EditBook = () => {
           </button>
           <button
             disabled={loading || !bookContent.pages.length}
-            onClick={() => updateBook("881f02dc-eba0-4789-9529-e451b0498a06")}
+            onClick={updateBook}
             type="button"
             className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
             განახლება{loading && "..."}

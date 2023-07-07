@@ -8,10 +8,12 @@ import { AuthContext } from "@/context/auth";
 const Books = () => {
   const [books, setBooks] = useState<any>([]);
   const [userId, setUserId] = useState("");
+  const [accessLoading, setAccessLoading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { setBookContent, setShowDeleteBookModal, setSelectedDeleteBookId } =
+  const { setBookContent, setShowDeleteBookModal, setSelectedDeleteBookId,setSelectedBookId } =
     useContext(BooksContext);
   const { user, adminToken } = useContext(AuthContext);
+  const [selected,setSelected] = useState('')
 
   const headers: any = {
     Authorization: `Bearer ${adminToken}`,
@@ -35,7 +37,7 @@ const Books = () => {
   }, []);
 
   const giveAccess = async (book: any) => {
-    setLoading(true);
+    setAccessLoading(true);
     const access = {
       bookId: book.id,
       userId: userId,
@@ -46,9 +48,10 @@ const Books = () => {
         access,
         { headers }
       );
-      setLoading(false);
+      setAccessLoading(false);
+      setUserId('')
     } catch (error) {
-      setLoading(false);
+      setAccessLoading(false);
       console.log(error);
     }
   };
@@ -61,7 +64,7 @@ const Books = () => {
           return (
             <div
               key={index}
-              className="max-w-xs w-[300px] rounded overflow-hidden justify-between flex flex-col shadow-lg">
+              className="max-w-xs w-[600px] rounded overflow-hidden justify-between flex flex-col shadow-lg">
               <img
                 className="w-full h-[300px]"
                 src={process.env.NEXT_PUBLIC_URL + book?.poster}
@@ -74,7 +77,10 @@ const Books = () => {
                 </p>
                 <div className="flex mt-4 justify-between">
                   <button
-                    onClick={() => setBookContent(book)}
+                    onClick={() => {
+                      setBookContent(book)
+                      setSelectedBookId(book.id)
+                    }}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
                     <Link href="/admin/edit_book">Edit</Link>
                   </button>
@@ -92,14 +98,17 @@ const Books = () => {
                     type="text"
                     className=" bg-transparent px-4 h-500 flex-1 w-[100px]"
                     placeholder="შეიყვანეთ ID"
-                    value={userId}
-                    onChange={(e) => setUserId(e.target.value)}
+                    value={selected === book.id ? userId : ''}
+                    onChange={(e) => {
+                      setSelected(book.id)
+                      setUserId(e.target.value)
+                    }}
                   />
                   <button
-                    disabled={loading && !Boolean(userId)}
+                    disabled={setAccessLoading && !Boolean(userId)}
                     onClick={() => giveAccess(book)}
-                    className=" bg-green-500 mx-auto hover:bg-green-700 text-white font-bold py-1 px-2 text-sm rounded">
-                    დამატება
+                    className=" bg-green-500 mx-auto hover:bg-green-700 text-white font-bold py-1 px-2 text-[10px] rounded">
+                    წვდომის მიცემა {accessLoading && selected === book.id &&  '...'}
                   </button>
                 </div>
               </div>

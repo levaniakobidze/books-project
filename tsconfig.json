@@ -24,7 +24,8 @@
     "**/*.tsx",
     "src/middleware.tse.ts",
     "src/components/Admin_components/Editor/Editor.jsx",
-    "src/pages/open_book/[id].js"
+    "src/pages/open_book/[id].js",
+    "src/components/Admin_components/EditBook/EditBook.jsx"
   ],
   "exclude": ["node_modules"]
 }

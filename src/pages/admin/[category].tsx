@@ -26,6 +26,7 @@ import Books from "@/components/Admin_components/Books/Books";
 import Logo from "../../../public/assets/logo.png";
 import Videos from "@/components/Admin_components/Videos/Videos";
 import { AuthContext } from "@/context/auth";
+import EditBook from "@/components/Admin_components/EditBook/EditBook";
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -72,6 +73,8 @@ const Index: FC = () => {
     switch (category) {
       case "add_book":
         return <AddBook />;
+      case "edit_book":
+        return <EditBook />;
       case "admin_categories":
         return <Categories />;
       case "admin_books":

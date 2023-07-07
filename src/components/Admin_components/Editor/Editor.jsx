@@ -233,7 +233,7 @@ const TextEditor = () => {
           <input
             type="search"
             id="default-search"
-            class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="შეიყვანეთ წიგნის სათაური"
             value={bookContent.author}
             onChange={(e) =>
@@ -244,8 +244,8 @@ const TextEditor = () => {
         </div>
         <div class="relative mt-5">
           <label
-            for="message"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            htmlFor="message"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             წიგნის კატეგორიები
           </label>
           {/* <div className="gap-2 flex justify-between w-full p-4 pl-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -277,12 +277,12 @@ const TextEditor = () => {
         <div className="flex gap-5">
           <div class="relative mt-5">
             <label
-              for="message"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              htmlFor="message"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               წიგნის პოსტერი
             </label>
             <div
-              class="block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block w-full p-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               // {...getRootProps()}
             >
               <input

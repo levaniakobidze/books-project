@@ -105,7 +105,7 @@ const Books = () => {
                     }}
                   />
                   <button
-                    disabled={setAccessLoading && !Boolean(userId)}
+                    disabled={accessLoading && !Boolean(userId)}
                     onClick={() => giveAccess(book)}
                     className=" bg-green-500 mx-auto hover:bg-green-700 text-white font-bold py-1 px-2 text-[10px] rounded">
                     წვდომის მიცემა {accessLoading && selected === book.id &&  '...'}

@@ -12,10 +12,9 @@ function Login() {
   });
 
   const onSubmit = async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const hash = urlParams.get("hash");
-    const url =
-      "https://books-project-back-production.up.railway.app/api/user/password-recovery";
+    const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+    const hash = urlParams ? urlParams.get("hash") : null;
+    const url = "https://books-project-back-production.up.railway.app/api/user/password-recovery";
     try {
       setLoading(true);
       await axios.post(url, {

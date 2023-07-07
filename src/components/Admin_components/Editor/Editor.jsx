@@ -35,7 +35,7 @@ const TextEditor = () => {
   };
   const log = () => {
     if (editorRef.current) {
-      console.log(editorRef.current.getContent());
+
     }
   };
 

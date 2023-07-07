@@ -49,7 +49,6 @@ export default function DeletBook(props: any) {
       setLoading(false);
       setSelectedDeleteBookId("");
       setShowDeleteBookModal(false);
-      console.log("after");
     } catch (error) {
       console.log(error);
       setLoading(false);

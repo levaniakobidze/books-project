@@ -28,7 +28,6 @@ const MyBooks = () => {
     getPurchaseHistory();
   }, [router.pathname]);
 
-  console.log(purchaseHistory);
 
   return (
     <Fragment>

@@ -10,9 +10,8 @@ function Forgot_password() {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async () => {
-    const host = window.location.host + "/new_password";
-    let url =
-      "https://books-project-back-production.up.railway.app/api/user/password-sendlink";
+    const host = typeof window !== 'undefined' ? window.location.host + "/new_password" : "";
+    let url = "https://books-project-back-production.up.railway.app/api/user/password-sendlink";
     try {
       setLoading(true);
       await axios.post(url, { email, redirectLink: host });
@@ -22,6 +21,7 @@ function Forgot_password() {
       console.log(error);
     }
   };
+
 
   return (
     <Fragment>

@@ -8,7 +8,7 @@ import BookAdded from "@/components/Modals/BookAdded/BookAdded";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { AuthContext } from "@/context/auth";
-import {router} from "next/client";
+import { useRouter } from "next/router";
 
 const EditBook = () => {
   const editorRef = useRef(null);
@@ -17,6 +17,7 @@ const EditBook = () => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const animatedComponents = makeAnimated();
+  const router = useRouter();
   const {
     bookContent,
     setBookContent,
@@ -25,8 +26,8 @@ const EditBook = () => {
     pageContent,
     setPageContent,
     categories,
-      selectedBookId,
-    setSelectedBookId
+    selectedBookId,
+    setSelectedBookId,
   } = useContext(BooksContext);
 
   const { adminToken } = useContext(AuthContext);
@@ -148,11 +149,11 @@ const EditBook = () => {
       author: bookContent.author,
       categories: bookContent.categories,
       pages: bookContent.pages.map((page) => {
-        delete page._id
-        return page
+        delete page._id;
+        return page;
       }),
     };
-    setLoading(true)
+    setLoading(true);
     try {
       if (
         bookContent.title &&
@@ -164,7 +165,7 @@ const EditBook = () => {
       ) {
         await axios.put(
           `https://books-project-back-production.up.railway.app/api/books/${selectedBookId}`,
-            postObj,
+          postObj,
           { headers }
         );
       } else {
@@ -180,11 +181,11 @@ const EditBook = () => {
         categories: [],
         pages: [],
       });
-      setSelectedBookId('')
+      setSelectedBookId("");
       setSelectedImg("");
       setLoading(false);
       setShowModal(true);
-      router.push('/admin/admin_books')
+      router.push("/admin/admin_books");
     } catch (error) {
       console.log(error);
     }

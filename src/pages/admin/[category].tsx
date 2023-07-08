@@ -73,8 +73,6 @@ const Index: FC = () => {
     switch (category) {
       case "add_book":
         return <AddBook />;
-      case "edit_book":
-        return <EditBook />;
       case "admin_categories":
         return <Categories />;
       case "admin_books":

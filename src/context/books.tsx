@@ -20,22 +20,9 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
   const [showLoginRegisterModal, setShowLoginRegisterModal] = useState(false);
   const [showDeleteBookModal, setShowDeleteBookModal] = useState(false);
   const [selectedDeleteBookId, setSelectedDeleteBookId] = useState("");
-const [selectedBookId,setSelectedBookId] = useState('')
-  const [bookContent, setBookContent] = useState({
-    title: "",
-    poster: "",
-    author: "",
-    price: "",
-    description: "",
-    categories: [],
-    pages: [],
-  });
+  const [selectedBookId, setSelectedBookId] = useState("");
   const [bookTitle, setBookTitle] = useState("");
   const [pagetTitle, setPageTitle] = useState("");
-  const [pageContent, setPageContent] = useState({
-    pageIndex: "",
-    content: "",
-  });
   const [books, setBooks] = useState<IBook[]>([]);
   const [displayBooks, setDisplayBooks] = useState<IBook[]>([]);
   const [categories, setCategories] = useState([]);
@@ -48,6 +35,28 @@ const [selectedBookId,setSelectedBookId] = useState('')
     cardName: "",
     userId: "",
     bookId: "",
+  });
+  const [pageContent, setPageContent] = useState({
+    pageIndex: "",
+    content: "",
+  });
+  const [bookContent, setBookContent] = useState({
+    title: "",
+    poster: "",
+    author: "",
+    price: "",
+    description: "",
+    categories: [],
+    pages: [],
+  });
+  const [editBookContent, setEditBookContent] = useState({
+    title: "",
+    poster: "",
+    author: "",
+    price: "",
+    description: "",
+    categories: [],
+    pages: [],
   });
   const getAllBooks = async () => {
     try {
@@ -109,6 +118,8 @@ const [selectedBookId,setSelectedBookId] = useState('')
   return (
     <BooksContext.Provider
       value={{
+        editBookContent,
+        setEditBookContent,
         selectedDeleteBookId,
         setSelectedDeleteBookId,
         setShowBuyBookModal,
@@ -140,8 +151,8 @@ const [selectedBookId,setSelectedBookId] = useState('')
         setShowLoginRegisterModal,
         getCategories,
         getAllBooks,
-          selectedBookId,
-          setSelectedBookId
+        selectedBookId,
+        setSelectedBookId,
       }}>
       {children}
     </BooksContext.Provider>

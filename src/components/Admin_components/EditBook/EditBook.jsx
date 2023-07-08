@@ -19,8 +19,8 @@ const EditBook = () => {
   const animatedComponents = makeAnimated();
   const router = useRouter();
   const {
-    bookContent,
-    setBookContent,
+    editBookContent,
+    setEditBookContent,
     pagetTitle,
     setPageTitle,
     pageContent,
@@ -49,7 +49,7 @@ const EditBook = () => {
       content: editorRef.current.getContent(),
       audio: "asda",
     };
-    setBookContent((prev) => ({ ...prev, pages: [...prev.pages, page] }));
+    setEditBookContent((prev) => ({ ...prev, pages: [...prev.pages, page] }));
     editorRef.current.setContent("");
     setPageTitle("");
     window.scrollTo(0, 0);
@@ -58,14 +58,14 @@ const EditBook = () => {
   const editHandler = () => {
     const newPageContent = editorRef.current.getContent();
 
-    const updatedPages = [...bookContent.pages];
+    const updatedPages = [...editBookContent.pages];
     updatedPages[pageContent.pageIndex] = {
       ...updatedPages[pageContent.pageIndex],
       title: pagetTitle,
       content: newPageContent,
       audio: "sdsad",
     };
-    setBookContent((prevBook) => ({
+    setEditBookContent((prevBook) => ({
       ...prevBook,
       pages: updatedPages,
     }));
@@ -76,11 +76,11 @@ const EditBook = () => {
   };
 
   const deleteHandler = () => {
-    const updatedPages = bookContent.pages.filter(
+    const updatedPages = editBookContent.pages.filter(
       (page, index) => index !== pageContent.pageIndex
     );
 
-    setBookContent((prevBook) => ({
+    setEditBookContent((prevBook) => ({
       ...prevBook,
       pages: updatedPages,
     }));
@@ -108,7 +108,7 @@ const EditBook = () => {
   const addCategory = () => {
     const category = categoryRef.current.value;
     if (category) {
-      setBookContent((prev) => ({
+      setEditBookContent((prev) => ({
         ...prev,
         categories: [...prev.categories, Number(category)],
       }));
@@ -117,7 +117,7 @@ const EditBook = () => {
   };
 
   const handleSelectPoster = (e) => {
-    setBookContent((prev) => ({ ...prev, poster: e.target.files[0] }));
+    setEditBookContent((prev) => ({ ...prev, poster: e.target.files[0] }));
     setSelectedImg(URL.createObjectURL(e.target.files[0]));
   };
 
@@ -128,27 +128,27 @@ const EditBook = () => {
   }, [pageContent]);
 
   // const formData = new FormData();
-  // const arrayOfObjects = bookContent.pages;
+  // const arrayOfObjects = editBookContent.pages;
   //
-  // formData.append("title", bookContent.title);
-  // formData.append("author", bookContent.author);
-  // formData.append("description", bookContent.description);
-  // formData.append("price", bookContent.price);
-  // formData.append("categories", bookContent.categories);
+  // formData.append("title", editBookContent.title);
+  // formData.append("author", editBookContent.author);
+  // formData.append("description", editBookContent.description);
+  // formData.append("price", editBookContent.price);
+  // formData.append("categories", editBookContent.categories);
   //
-  // for (let index = 0; index < bookContent.pages.length; index++) {
-  //   const element = bookContent.pages[index];
+  // for (let index = 0; index < editBookContent.pages.length; index++) {
+  //   const element = editBookContent.pages[index];
   //   formData.append("pages[]", JSON.stringify(element));
   // }
 
   const updateBook = async () => {
     const postObj = {
-      title: bookContent.title,
-      description: bookContent.description,
-      price: bookContent.price,
-      author: bookContent.author,
-      categories: bookContent.categories,
-      pages: bookContent.pages.map((page) => {
+      title: editBookContent.title,
+      description: editBookContent.description,
+      price: editBookContent.price,
+      author: editBookContent.author,
+      categories: editBookContent.categories,
+      pages: editBookContent.pages.map((page) => {
         delete page._id;
         return page;
       }),
@@ -156,12 +156,12 @@ const EditBook = () => {
     setLoading(true);
     try {
       if (
-        bookContent.title &&
-        bookContent.author &&
-        bookContent.price &&
-        bookContent.poster &&
-        bookContent.description &&
-        bookContent.pages
+        editBookContent.title &&
+        editBookContent.author &&
+        editBookContent.price &&
+        editBookContent.poster &&
+        editBookContent.description &&
+        editBookContent.pages
       ) {
         await axios.put(
           `https://books-project-back-production.up.railway.app/api/books/${selectedBookId}`,
@@ -172,7 +172,7 @@ const EditBook = () => {
         setLoading(false);
         return;
       }
-      setBookContent({
+      setEditBookContent({
         title: "",
         poster: "",
         author: "",
@@ -211,7 +211,7 @@ const EditBook = () => {
 
   const handleSelect = (selected) => {
     const categories = selected.map((category) => category.value);
-    setBookContent((prev) => ({
+    setEditBookContent((prev) => ({
       ...prev,
       categories: [...categories],
     }));
@@ -222,7 +222,7 @@ const EditBook = () => {
       <BookAdded showModal={showModal} setShowModal={setShowModal} />
       <div className="w-[100px] mr-2 ">
         <ul className="">
-          {bookContent.pages?.map((page, index) => {
+          {editBookContent.pages?.map((page, index) => {
             return (
               <li
                 key={index}
@@ -251,9 +251,12 @@ const EditBook = () => {
               id="default-search"
               class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="სათაური"
-              value={bookContent.title}
+              value={editBookContent.title}
               onChange={(e) =>
-                setBookContent((prev) => ({ ...prev, title: e.target.value }))
+                setEditBookContent((prev) => ({
+                  ...prev,
+                  title: e.target.value,
+                }))
               }
               required
             />
@@ -269,9 +272,12 @@ const EditBook = () => {
               id="default-search"
               class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="შეიყვანეთ წიგნის სათაური"
-              value={bookContent.author}
+              value={editBookContent.author}
               onChange={(e) =>
-                setBookContent((prev) => ({ ...prev, author: e.target.value }))
+                setEditBookContent((prev) => ({
+                  ...prev,
+                  author: e.target.value,
+                }))
               }
               required
             />
@@ -348,9 +354,9 @@ const EditBook = () => {
                 id="default-search"
                 class="block w-full p-4 pl-3 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="შეიყვანეთ წიგნის სათაური"
-                value={bookContent.price}
+                value={editBookContent.price}
                 onChange={(e) =>
-                  setBookContent((prev) => ({
+                  setEditBookContent((prev) => ({
                     ...prev,
                     price: Number(e.target.value),
                   }))
@@ -369,11 +375,11 @@ const EditBook = () => {
             <textarea
               id="message"
               rows="4"
-              value={bookContent.description}
+              value={editBookContent.description}
               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Write your thoughts here..."
               onChange={(e) =>
-                setBookContent((prev) => ({
+                setEditBookContent((prev) => ({
                   ...prev,
                   description: e.target.value,
                 }))
@@ -458,10 +464,10 @@ const EditBook = () => {
           {pageContent.content && (
             <button
               disabled={
-                !bookContent.title ||
-                !bookContent.description ||
-                !bookContent.price ||
-                !bookContent.author
+                !editBookContent.title ||
+                !editBookContent.description ||
+                !editBookContent.price ||
+                !editBookContent.author
               }
               onClick={editHandler}
               type="button"
@@ -472,10 +478,10 @@ const EditBook = () => {
 
           <button
             disabled={
-              !bookContent.title ||
-              !bookContent.description ||
-              !bookContent.price ||
-              !bookContent.author
+              !editBookContent.title ||
+              !editBookContent.description ||
+              !editBookContent.price ||
+              !editBookContent.author
             }
             onClick={uploadHandler}
             type="button"
@@ -489,7 +495,7 @@ const EditBook = () => {
             გვერდის წაშლა
           </button>
           <button
-            disabled={loading || !bookContent.pages.length}
+            disabled={loading || !editBookContent.pages.length}
             onClick={updateBook}
             type="button"
             className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">

@@ -10,10 +10,14 @@ const Books = () => {
   const [userId, setUserId] = useState("");
   const [accessLoading, setAccessLoading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { setBookContent, setShowDeleteBookModal, setSelectedDeleteBookId,setSelectedBookId } =
-    useContext(BooksContext);
+  const {
+    setEditBookContent,
+    setShowDeleteBookModal,
+    setSelectedDeleteBookId,
+    setSelectedBookId,
+  } = useContext(BooksContext);
   const { user, adminToken } = useContext(AuthContext);
-  const [selected,setSelected] = useState('')
+  const [selected, setSelected] = useState("");
 
   const headers: any = {
     Authorization: `Bearer ${adminToken}`,
@@ -49,7 +53,7 @@ const Books = () => {
         { headers }
       );
       setAccessLoading(false);
-      setUserId('')
+      setUserId("");
     } catch (error) {
       setAccessLoading(false);
       console.log(error);
@@ -76,14 +80,15 @@ const Books = () => {
                   {book.description.substr(0, 20)}...
                 </p>
                 <div className="flex mt-4 justify-between">
-                  <button
+                  <Link
                     onClick={() => {
-                      setBookContent(book)
-                      setSelectedBookId(book.id)
+                      setEditBookContent(book);
+                      setSelectedBookId(book.id);
                     }}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                    <Link href="/admin/edit_book">Edit</Link>
-                  </button>
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                    href="/admin/edit_book">
+                    Edit
+                  </Link>
                   <button
                     onClick={() => {
                       setSelectedDeleteBookId(book.id);
@@ -98,17 +103,18 @@ const Books = () => {
                     type="text"
                     className=" bg-transparent px-4 h-500 flex-1 w-[100px]"
                     placeholder="შეიყვანეთ ID"
-                    value={selected === book.id ? userId : ''}
+                    value={selected === book.id ? userId : ""}
                     onChange={(e) => {
-                      setSelected(book.id)
-                      setUserId(e.target.value)
+                      setSelected(book.id);
+                      setUserId(e.target.value);
                     }}
                   />
                   <button
                     disabled={accessLoading && !Boolean(userId)}
                     onClick={() => giveAccess(book)}
                     className=" bg-green-500 mx-auto hover:bg-green-700 text-white font-bold py-1 px-2 text-[10px] rounded">
-                    წვდომის მიცემა {accessLoading && selected === book.id &&  '...'}
+                    წვდომის მიცემა{" "}
+                    {accessLoading && selected === book.id && "..."}
                   </button>
                 </div>
               </div>

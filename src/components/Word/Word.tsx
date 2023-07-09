@@ -81,11 +81,14 @@ function Word() {
     setExampleSentence(wordList[wordIndex].exampleSentence);
   };
   return (
-    <div className="w-md bg-blue-400  mx-auto p-10">
-      <h2>დღის სიტყვა</h2>
-      <p>{word}</p>
-      <p>{translation}</p>
-      <p>{exampleSentence}</p>
+    <div className=" w-full md:w-[500px] py-10 md:py-0 w-100% mt-[70px] mx-auto rounded-2xl h-[100%] flex flex-col justify-center items-center bg-blue-400 gap-5  shadow-md  mb-[50px]">
+      {/* <div className="w-[5px] h-[100%] shadow-md "></div> */}
+      <div className=" p-5  flex items-center rounded-md bg-pink-400 ">
+        <p className="text-xl text-white font-bold">{word}</p>
+        <p className="mx-2 text-white ">-</p>
+        <p className="text-xl text-white font-bold">{translation}</p>
+      </div>
+      <p className="text-gray-100 font-bold">{exampleSentence}</p>
     </div>
   );
 }

@@ -192,19 +192,21 @@ function Navigation() {
         <ul className="mt-10">
           {isAuth && <Dropdown username={user.userName} />}
           {navigation.map((nav, index) => {
-            return (
-              <li className="mt-5 text-right" key={index}>
-                <Link
-                  onClick={() => setShowMenu(false)}
-                  className={` ${
-                    pathname === nav.href ? "text-[#6ca0d1]" : "text-white"
-                  } hover:text-[#6ca0d1] font-bold transition-all flex justify-start text-lg tracking-wider`}
-                  href={nav.href}>
-                  <nav.icon className="text-md mx-2" />
-                  {nav.name}
-                </Link>
-              </li>
-            );
+            if (!isAuth && nav.needAuth === false) {
+              return (
+                <li className="mt-5 text-right" key={index}>
+                  <Link
+                    onClick={() => setShowMenu(false)}
+                    className={` ${
+                      pathname === nav.href ? "text-[#6ca0d1]" : "text-white"
+                    } hover:text-[#6ca0d1] font-bold transition-all flex justify-start text-lg tracking-wider`}
+                    href={nav.href}>
+                    <nav.icon className="text-md mx-2" />
+                    {nav.name}
+                  </Link>
+                </li>
+              );
+            }
           })}
 
           {!isAuth && (

@@ -19,7 +19,7 @@ const AdminBook = ({ book }: { book: any }) => {
     <>
       <Link
         href={`/my_books/${book.id}`}
-        className="rounded mt-10 shadow-lg max-w-sm border min-w-[200px] max-h-[400px]">
+        className="rounded shadow-lg  border max-h-[400px] w-[300px] mt-5">
         <div className="px-3">
           <img
             className="w-full object-cover  h-[220px]"

@@ -11,7 +11,7 @@ import PurchaseSuccess from "@/components/Modals/PurchaseSuccess/PurchaseSuccess
 import AccessWaiting from "@/components/Modals/AccessWaiting/AccessWaiting";
 
 const MyBooks = () => {
-  const { isAuth, user } = useContext(AuthContext);
+  const { isAuth, user, token } = useContext(AuthContext);
   const { books, purchaseHistory, getPurchaseHistory } =
     useContext(BooksContext);
 
@@ -28,6 +28,12 @@ const MyBooks = () => {
     getPurchaseHistory();
   }, [router.pathname]);
 
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      router.push("/auth/login");
+      return;
+    }
+  }, []);
 
   return (
     <Fragment>
@@ -38,7 +44,7 @@ const MyBooks = () => {
         className="
           bg-gradient-to-r to-tl from-[#c7d8e8] to-[#fde6e7]">
         {myBooks.length > 0 && (
-          <div className=" w-[100%] px-5 mx-auto min-h-screen  grid max-w-2xl grid-cols-2 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4 lg:gap-8">
+          <div className=" w-[100%] px-5 mx-auto min-h-screen    max-w-2xl flex flex-wrap  gap-6 sm:gap-6 lg:mx-0 lg:max-w-none lg:gap-8">
             {myBooks &&
               myBooks.map((book: IBook, index) => {
                 return <AdminBook key={index} book={book} />;

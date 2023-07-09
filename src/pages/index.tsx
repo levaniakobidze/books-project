@@ -23,27 +23,34 @@ export default function Home() {
       <Navigation />
       <div className="max:w-lg  w-full min:h-screen flex flex-col no-print  ">
         <VideoSlider />
-        <div>
-          <Word />
-        </div>
-        {categories.length >= 4 && (
-          <div>
-            <h1 className="text-center text-gray-500 font-bold text-2xl tracking-wider">
-              კატეგორიები
-            </h1>
-            <div className="mt-5 px-10 max:w-lg py-6 w-fullpx-10 mx-auto  grid max-w-2xl grid-cols-2 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4 lg:gap-8   ">
-              {categories.map((category: ICategory, index: number) => {
-                return <Category key={index} category={category} />;
-              })}
+        <div className="flex flex-col mx-auto md:flex-row gap-6   ">
+          {categories.length >= 4 && (
+            <div className="">
+              <h1 className="text-center text-gray-500 font-bold text-2xl tracking-wider">
+                კატეგორიები
+              </h1>
+              <div className=" px-10 max:w-lg py-[60px] w-fullpx-10 mx-auto  grid max-w-2xl grid-cols-2 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-8   ">
+                {categories
+                  .slice(0, 6)
+                  .map((category: ICategory, index: number) => {
+                    return <Category key={index} category={category} />;
+                  })}
+              </div>
             </div>
+          )}
+          <div className="flex flex-col items-center">
+            <h2 className="text-center text-gray-500 font-bold text-2xl tracking-wider">
+              დღის სიტყვა
+            </h2>
+            <Word />
           </div>
-        )}
+        </div>
 
         <div className="mt-20">
           <h1 className="text-center mb-10 text-gray-500 font-bold text-2xl tracking-wider">
             წიგნები
           </h1>
-          <div className=" px-5 mx-auto  grid max-w-2xl grid-cols-2 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4 lg:gap-8">
+          <div className="px-5 mx-auto max-w-2xl flex flex-wrap justify-center items-center gap-6 sm:gap-6 lg:mx-0 lg:max-w-none lg:gap-8">
             {books &&
               books.slice(0, 4).map((book: IBook, index: number) => {
                 return <Book book={book} key={index} />;

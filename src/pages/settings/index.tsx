@@ -1,7 +1,12 @@
 import Navigation from "@/components/Navigation/Navigation";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 
-function index() {
+function Index() {
+  const [oldPass, setOldPass] = useState("");
+  const [newPass, setNewPass] = useState("");
+
+  const changePasswordHandler = () => {};
+
   return (
     <Fragment>
       <Navigation />
@@ -17,16 +22,18 @@ function index() {
             <form className="space-y-6" action="#" method="POST">
               <div>
                 <label
-                  htmlFor="email"
+                  htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900">
                   ძველი პაროლი
                 </label>
                 <div className="mt-2 ">
                   <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    value={oldPass}
+                    onChange={(e) => setOldPass(e.target.value)}
                     required
                     className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
@@ -46,15 +53,16 @@ function index() {
                     id="password"
                     name="password"
                     type="password"
-                    autoComplete="current-password"
                     required
+                    value={newPass}
+                    onChange={(e) => setNewPass(e.target.value)}
                     className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
-
               <div>
                 <button
+                  onClick={changePasswordHandler}
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-blue-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   შეცვლა
@@ -68,4 +76,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;

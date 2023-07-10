@@ -45,7 +45,7 @@ const Dwopdown = (props: { username: string }) => {
               )}
             </Menu.Item>
           </div>
-          <div className="py-1">
+          {/* <div className="py-1">
             <Menu.Item>
               {({ active }) => (
                 <Link
@@ -58,7 +58,7 @@ const Dwopdown = (props: { username: string }) => {
                 </Link>
               )}
             </Menu.Item>
-          </div>
+          </div> */}
           <div className="py-1">
             <form method="POST" action="#">
               <Menu.Item>

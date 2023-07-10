@@ -58,6 +58,7 @@ const ContextProvider = ({ children }: ParentComponentProps) => {
     categories: [],
     pages: [],
   });
+
   const getAllBooks = async () => {
     try {
       const resp = await axios.get(

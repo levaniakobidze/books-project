@@ -1,20 +1,36 @@
 import Navigation from "@/components/Navigation/Navigation";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import Password_recovered from "../components/Modals/Password_recovered/Password_recovered";
 function Login() {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errMessage, setErrMessage] = useState({ show: true, message: "" });
   const [data, setData] = useState({
     new_password: "",
     confirm_new_password: "",
   });
 
   const onSubmit = async () => {
-    const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+    const urlParams =
+      typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search)
+        : null;
     const hash = urlParams ? urlParams.get("hash") : null;
-    const url = "https://books-project-back-production.up.railway.app/api/user/password-recovery";
+    const url =
+      "https://books-project-back-production.up.railway.app/api/user/password-recovery";
+    if (data.new_password !== data.confirm_new_password) {
+      setErrMessage({ show: true, message: "პაროლები არ ემთხვევა" });
+      return;
+    }
+    if (data.new_password === "" || data.confirm_new_password === "") {
+      setErrMessage({
+        show: true,
+        message: "შეავსეთ ველები",
+      });
+      return;
+    }
     try {
       setLoading(true);
       await axios.post(url, {
@@ -27,6 +43,20 @@ function Login() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (data.new_password !== data.confirm_new_password) {
+      setErrMessage({
+        show: true,
+        message: "პაროლები არ ემთხვევა",
+      });
+    } else {
+      setErrMessage({
+        show: false,
+        message: "",
+      });
+    }
+  }, [data.confirm_new_password]);
 
   return (
     <Fragment>
@@ -45,11 +75,18 @@ function Login() {
           </h1> */}
 
           <div className="mt-5">
+            {errMessage.show && (
+              <div className="border border-red-300 p-3 mb-2 rounded-lg bg-red-200">
+                <p className="text-red-500 text-sm font-bold">
+                  {errMessage.message}
+                </p>
+              </div>
+            )}
             <label htmlFor="password" className="px-1 text-sm text-gray-800">
               ახალი პაროლი
             </label>
             <input
-              type="password"
+              type="text"
               name="password"
               id="password"
               value={data.new_password}
@@ -65,13 +102,13 @@ function Login() {
               გაიმეორეთ პაროლი
             </label>
             <input
-              type="password"
+              type="text"
               name="repeat_password"
               id="repeat_password"
               value={data.confirm_new_password}
-              onChange={(e) =>
-                setData({ ...data, confirm_new_password: e.target.value })
-              }
+              onChange={(e) => {
+                setData({ ...data, confirm_new_password: e.target.value });
+              }}
               placeholder="გაიმეორეთ პაროლი"
               className="mt-3 w-full py-2.5 px-3 bg-[#f0f5f9] border-0 outline-none rounded-lg focus:outline focus:outline-cyan-300  text-sm"
             />
